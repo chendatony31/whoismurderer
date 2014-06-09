@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,user-scalable=no" />
+	<title>谁是凶手</title>
+	<link href="css/main.css" rel="stylesheet" />
+	<link href="lib/jquery-ui-1.10.4.custom.css" rel="stylesheet" />
+</head>
+<body>
+	<div id="welcomeStage">
+		<span style="line-height:500px;"> </span>
+		<input type="text" id="input_nickname" maxlength="14" autofocus="autofocus" placeholder="输入你的昵称" /> 
+		<button id="btn_enter">确定</button>
+	</div>
+	
+	<div id="gameStage">
+		<div id="userListCont">
+		<h2>玩家列表</h2>
+		<ul id="userList">
+		
+		</ul>
+		</div>
+		<div id="gameArea">
+		</div>
+		<div id="chatArea">
+			<ul id="messages">
+			</ul>
+			<div id="chatForm">
+				<input id="input_msg" type="text" /><input id="btnSend" type="button" value="发送" />
+			</div>
+		</div>
+	</div>
+	<script src="lib/jquery-1.10.2.js"></script>
+	<script src="lib/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="http://172.18.145.54:3000/socket.io/socket.io.js"></script>
+	<script>
+	$(document).ready(function() {
+		setH();
+		$( "#chatArea").draggable();
+		$("#userListCont").draggable();
+		$(window).resize(function() {
+			setH();
+		});
+	});
+	var nickName;
+	var socket = io.connect('http://172.18.145.54:3000');
+	
+	//用户登录
+	$("#btn_enter").click(userlogin);
+	function userlogin(){
+		if($('#input_nickname').val()){
+			nickName = $('#input_nickname').val();
+			socket.emit('user login',nickName);
+			$('#welcomeStage').css("display","none");
+			$('#gameStage').css("display","block");
+		}
+	}
+	
+	//监听用户登录登出
+	socket.on('note user login', function(userList){
+		$('#userList').html('');
+		for(i=0;i<userList.users.length;i++){
+			$('#userList').append($('<li>').text(userList.users[i]));
+		}
+	});
+	//监听showmessage
+	socket.on('show message',function(msg){
+		$('#messages').append($('<li>').text(msg));
+	});
+	
+	//点击发送向后台发送消息
+	$("#btnSend").click(send_message);
+	
+	function send_message(){
+		if($('#input_msg').val()){
+			socket.emit('send message',$('#input_msg').val());
+			$('#input_msg').val('');
+			return false;
+		}else{ return false;}
+	}	
+		
+	//根据浏览器动态设置高度
+    function setH() {
+        var w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+        var h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+        
+        document.getElementById("gameArea").style.height = (h-2) + "px";
+		document.getElementById("chatArea").style.height = (h-122) + "px";
+		document.getElementById("messages").style.height = (h - 156) + "px";
+    }
+		
+	//按键控制
+	document.onkeydown=function(){keydown()}
+	function keydown(){
+		if(event.keyCode==13){
+			userlogin();
+		}
+	}
+	</script>
+</body>
+</html>

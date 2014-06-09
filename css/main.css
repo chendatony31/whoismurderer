@@ -1,0 +1,23 @@
+html,body,h1,h2,#chatForm,#input_msg,#btnSend,#gameArea,#chatArea,ul,li{ padding:0; margin:0}
+html,body{ width:100%; height:100%}
+ul{list-style-type:none;}
+h2{font-size:16px; text-align:center; margin:8px;}
+#welcomeStage{ position:absolute; width:100%; height:100%; 
+	background:#333; text-align:center;}
+#welcomeStage * { vertical-align:middle;}
+#userListCont{ width:100px; height:150px; background:#ddd; padding:8px;border:1px solid #666; }
+#userList{ width:100%; height:110px; }
+#input_nickname{ width:200px; height:30px; background:#333; border:none;
+	border-bottom:1px solid #ddd; font-size:20px; color:#fff; padding-left:8px;}
+#btn_enter{ width:80px; height:30px;}
+#gameStage{ width:100%; display:none;}
+#gameArea{ width:100%;position:fixed; left:0; border:none;}
+#chatArea{width:250px; position:fixed; top:50px; right:0;border:1px solid #666;
+	background:#ddd;}
+#messages{ width:100%;  overflow:auto;}
+#messages li { padding:8px 16px;}
+#messages li:nth-child(even) {background: #CCC}
+#messages li:nth-child(odd) {background: #FFF}
+#chatForm{ position:relative; bottom:0; width:250px; background:#333;}
+#input_msg{ width:80%; border:0; height:32px; margin:2px .5%;}
+#btnSend { width:18%; border:0;height:32px; margin:2px .5%;}
