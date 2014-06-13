@@ -1,5 +1,5 @@
 var nickName;
-var socket = io.connect('http://172.21.85.155:3000');
+var socket = io.connect('http://172.18.145.54:3000');
 var whosTurn;
 var gamerNum;
 var myPokers = [];
@@ -7,6 +7,7 @@ var reNum = 0;
 var dropList = [];
 var dropNum;
 var _POKERCOLOR = {heart:'红桃',diamond:'方片',spade:'黑桃',club:'梅花'};
+var _COLOR = {heart:'0',diamond:'1',spade:'2',club:'3' };
 var _POKERS = {
 	1:{color:'红桃',num:1},
 	2:{color:'红桃',num:2},
@@ -36,7 +37,8 @@ var _POKERS = {
 	35:{color:'梅花',num:5},
 	36:{color:'梅花',num:6},
 	37:{color:'梅花',num:7}
-	}
+	};
+
 
 //用户登录
 $("#btn_enter").click(userlogin);
@@ -72,6 +74,7 @@ function gameon(){
 	socket.emit('game start');
 	$('#operateArea').html('');
 	$('#operateArea').append('<input id="btn_restart" type="button" value="重新开始游戏" onclick="gameon()" />');
+
 }
 
 //接收初始牌
@@ -79,11 +82,21 @@ socket.on('send poker',function(data){
 	myPokers = data.poker;
 	gamerNum = data.num;
 	listMyPokers(myPokers);
+	
+});
+
+//公共牌
+socket.on('public pokers',function(pokers){
+	var PUBLISH = '';
+	for(i=0;i<pokers.length;i++){
+		PUBLISH = PUBLISH + formatPoker(pokers[i]) + ' ';
+	}
+	$('#gameMessageArea').prepend($('<p>').text('公共牌有' +PUBLISH ));
 });
 //将自己的手牌展示出来
 function listMyPokers(myPokers){
 	$('#pokerList').html('');
-	myPokers.sort();
+	myPokers.sort(function(a,b){ return a-b});
 	for (i=0;i<myPokers.length;i++){
 		$('#pokerList').append($('<li>').text(_POKERS[myPokers[i]].color + _POKERS[myPokers[i]].num).attr({"id":'p' + myPokers[i],"val": myPokers[i]}));
 	}
@@ -94,7 +107,7 @@ socket.on('whos turn', function(who){
 		$('#selectArea').css('display','block');
 	}
 	whosTurn=who;
-	$('#gameMessageArea').append($('<p>').text(whosTurn + ' 开始要牌'));
+	$('#gameMessageArea').prepend($('<p>').text(whosTurn + ' 开始要牌'));
 });
 //要牌
 $('#selectArea').click(function(e){
@@ -105,7 +118,7 @@ $('#selectArea').click(function(e){
 });
 //监听要的什么牌
 socket.on('request poker',function(choice){
-	$('#gameMessageArea').append($('<p>').text(whosTurn + '要了' + _POKERCOLOR[choice] ));
+	$('#gameMessageArea').prepend($('<p>').text(whosTurn + '要了' + _POKERCOLOR[choice] ));
 	deliverAPoker(choice);
 });
 //给牌
@@ -118,13 +131,12 @@ function deliverAPoker(choice){
 			$(pid).addClass('drapablePoker').click(function(e){
 				var deliveredId = e.target.id.substring(1);
 				socket.emit('delivered poker', {who:nickName,poker:deliveredId});
-				$('#gameMessageArea').append($('<p>').text('你给了'+whosTurn + _POKERS[deliveredId].color + _POKERS[deliveredId].num));
+				$('#gameMessageArea').prepend($('<p>').text('你给了'+whosTurn + _POKERS[deliveredId].color + _POKERS[deliveredId].num));
 				delPoker(deliveredId);
 			});
 		}
 	}
 	if(!isHaveColor){
-		alert("我没有牌给他");
 		socket.emit('deliver nopoker', nickName);
 	}
 }
@@ -133,7 +145,7 @@ socket.on('accept poker',function(data){
 	reNum++;
 	var who = data.who;
 	var newPokerId = data.poker;
-	$('#gameMessageArea').append($('<p>').text(who + '给了你 '+ _POKERS[newPokerId].color + _POKERS[newPokerId].num));
+	$('#gameMessageArea').prepend($('<p>').text(who + '给了你 '+ _POKERS[newPokerId].color + _POKERS[newPokerId].num));
 	myPokers.push(newPokerId);
 	listMyPokers(myPokers);
 	if(reNum==gamerNum-1){
@@ -144,7 +156,7 @@ socket.on('accept poker',function(data){
 //没有收到牌
 socket.on('accept nopoker',function(name){
 	reNum++;
-	$('#gameMessageArea').append($('<p>').text(name + '没有牌给你 '));
+	$('#gameMessageArea').prepend($('<p>').text(name + '没有牌给你 '));
 	if(reNum==gamerNum-1){
 		dropPokers();
 	}
@@ -179,8 +191,8 @@ function delPoker(id){
 }
 //监听showmessage
 socket.on('show message',
-function(msg) {
-    $('#messages').append($('<li>').text(msg));
+function(data) {
+    $('#messages').prepend($('<li>').text(data.who + ":"+data.msg));
 });
 
 //点击发送向后台发送消息
@@ -188,7 +200,7 @@ $("#btnSend").click(send_message);
 
 function send_message() {
     if ($('#input_msg').val()) {
-        socket.emit('send message', $('#input_msg').val());
+        socket.emit('send message', {msg:$('#input_msg').val(),who:nickName});
         $('#input_msg').val('');
         return false;
     } else {
@@ -199,7 +211,6 @@ function send_message() {
 $('#btn_drop').click(function(){
 	if(dropList.length==3){
 		socket.emit('drop firstPoker',dropList[0]);
-		alert('扔了三张');
 		socket.emit('drop otherPoker', dropList);
 		for(var i=0; i<3;i++){
 			delPoker(dropList[i]);
@@ -208,7 +219,6 @@ $('#btn_drop').click(function(){
 		dropList=[];
 		$('#dropArea').css('display','none');
 	}else if(dropList.length==1){
-		alert('扔了一张');
 		socket.emit('drop onePoker' ,dropList[0]);
 		delPoker(dropList[0]);
 		listMyPokers(myPokers);
@@ -220,16 +230,51 @@ $('#btn_drop').click(function(){
 	}
 	
 });
-
+//guess!
+$('#btn_guess').click(function(){
+	var color = $('#guessColor').val();
+	var num = $('#guessNum').val();
+	var id = (_COLOR[color]+num)*1;
+	socket.emit('guess',{pokerid:id,who:nickName});
+});
+//猜测结果
+socket.on('bingo',function(data){
+	if(data.who == nickName){
+		$('#gameMessageArea').prepend($('<p>').text('你赢了~~'));
+	}else{$('#gameMessageArea').prepend($('<p>').text('小伙伴'+data.who+'猜对了~~是'+ formatPoker(data.pokerid))); }
+});
+socket.on('guess failed',function(data){
+	if(data.who == nickName){
+		$('#gameMessageArea').prepend($('<p>').text('你猜错了~~'));
+		socket.emit('show my pokers',{pokers:myPokers,who:nickName});
+		var pNum = myPokers.length;
+		for(j=pNum-1;j>=0;j--){
+			delPoker(myPokers[j]);
+		}
+		$('#guessArea').css('display','none');
+		$('#selectArea').css('display','none');
+		$('#dropArea').css('display','none');
+	}else{
+		$('#gameMessageArea').prepend($('<p>').text('小伙伴'+data.who+'猜'+ formatPoker(data.pokerid) + '猜错了'));
+	}
+});
 //监听扔牌
 socket.on('one of three',function(data){
-	$('#gameMessageArea').append($('<p>').text(data.who + '扔了' + _POKERS[data.pokerid].color + _POKERS[data.pokerid].num + '和另外两张'));
+	$('#gameMessageArea').prepend($('<p>').text(data.who + '扔了' + _POKERS[data.pokerid].color + _POKERS[data.pokerid].num + '和另外两张'));
 });
 socket.on('others poker',function(data){
-	$('#gameMessageArea').append($('<p>').text('我扔了' + formatPoker(data[0]) + ' ' + formatPoker(data[1]) + ' ' + formatPoker(data[2])));
+	$('#gameMessageArea').prepend($('<p>').text('我扔了' + formatPoker(data[0]) + ' ' + formatPoker(data[1]) + ' ' + formatPoker(data[2])));
 });
 socket.on('only onePoker',function(data){
-	$('#gameMessageArea').append($('<p>').text(data.who + '扔了' + formatPoker(data.pokerid)));
+	$('#gameMessageArea').prepend($('<p>').text(data.who + '扔了' + formatPoker(data.pokerid)));
+});
+//展示输的手牌
+socket.on('show its pokers', function(data){
+	var pokerString = "";
+	for(i=0;i<data.pokers.length;i++){
+		pokerString += formatPoker(data.pokers[i]) + " ";
+	}
+	$('#gameMessageArea').prepend($('<p>').text(data.who + '扔了' + pokerString));
 });
 //点击重新选择按钮
 $('#btn_cancel').click(function(){
