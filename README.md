@@ -14,6 +14,7 @@
 
 
 这个github项目是在学习socket.io时做的 功能基本实现。界面有时间尽量完善。
+因为以后想把前后台物理上分离开，所有把socket.io服务器单独拿出来做。
 
 首先下载 https://github.com/chendatony31/whoisserver 的 server端 
   node server.js
