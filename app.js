@@ -289,6 +289,15 @@ function setH() {
     document.getElementById("chatArea").style.height = (h - 152) + "px";
     document.getElementById("messages").style.height = (h - 186) + "px";
 }
+//记录table
+$('.record').click(function(e){
+	var curNum = $(this).html()*1;
+	if(curNum==9){
+		$(this).html('');
+	}else{
+		$(this).html(curNum+1);
+	}
+});
 //id向扑克转换
 function formatPoker(id){
 	return _POKERS[id].color + _POKERS[id].num

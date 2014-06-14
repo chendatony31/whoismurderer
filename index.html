@@ -9,9 +9,10 @@
 </head>
 <body>
 	<div id="welcomeStage">
-		<span style="line-height:500px;"> </span>
+		<h1>谁是凶手</h1>
+		<p>找出谁是凶手！</p>
 		<input type="text" id="input_nickname" maxlength="14" autofocus="autofocus" placeholder="输入你的昵称" /> 
-		<button id="btn_enter">确定</button>
+		<button id="btn_enter">进入</button>
 	</div>
 	
 	<div id="gameStage">
@@ -33,7 +34,7 @@
 			</div>
 		</div>
 		<div id="userListCont">
-		<h2>玩家列表</h2>
+		<h2 class="ui-widget-header">玩家列表</h2>
 		<ul id="userList">
 		
 		</ul>
@@ -77,14 +78,23 @@
 			</div>
 		</div>
 		<div id="infoArea">
+			<h2>记录板</h2>
+			<p class="tips">记录方式：点击+1,9点击变空</p>
 			<table>
-				<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				<tr>
+					<th style="width:50px;">可拖拽</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th>
 				</tr>
-				<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				<tr>
+					<td>红桃</td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td>
 				</tr>
-				<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				<tr>
+					<td>方片</td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td>
 				</tr>
-				<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+				<tr>
+					<td>黑桃</td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td>
+				</tr>
+				<tr>
+					<td>梅花</td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td>
 				</tr>
 			</table>
 		</div>
@@ -92,13 +102,15 @@
 	</div>
 	<script src="lib/jquery-1.10.2.js"></script>
 	<script src="lib/jquery-ui-1.10.4.custom.min.js"></script>
-	<script src="http://172.18.145.54:3000/socket.io/socket.io.js"></script>//修改为自己的ip地址
+	<script src="http://172.18.145.54:3000/socket.io/socket.io.js"></script><!--修改为自己的ip地址 -->
 	<script>
 	var socket = io.connect('http://172.18.145.54:3000'); //修改为自己的ip地址
 	$(document).ready(function() {
 		setH();
 		$("#userListCont").draggable();
 		$("#chatArea").draggable();
+		$("#infoArea").draggable();
+		$("#gameMessageArea").draggable();
 		
 		$(window).resize(function() {
 			setH();
