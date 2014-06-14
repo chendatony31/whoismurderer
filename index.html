@@ -18,28 +18,58 @@
 	<div id="gameStage">
 		
 		<div id="gameArea">
-			<div id="pokerArea">
+			
+			
+		</div>
+		<div id="pokerArea">
 				<ul id="pokerList">
 				</ul>
-			</div>
-			<div id="gameMessageArea">
-				
-			</div>
 		</div>
 		<div id="chatArea">
+			<h2 class="ui-widget-header">聊天区</h2>
 			<ul id="messages">
 			</ul>
 			<div id="chatForm">
 				<input id="input_msg" type="text" /><input id="btnSend" type="button" value="发送" />
 			</div>
 		</div>
-		<div id="userListCont">
-		<h2 class="ui-widget-header">玩家列表</h2>
-		<ul id="userList">
-		
-		</ul>
+		<div id="mainCont">
+			<div id="msgCont">
+				<h2 class="ui-widget-header">游戏信息</h2>
+				<div id="gameMessageArea">
+						
+				</div>
+			</div>
+			<div id="userListCont">
+				<h2 class="ui-widget-header">玩家列表</h2>
+				<ul id="userList">
+				</ul>
+			</div>
+			<div id="infoArea">
+				<h2 class="ui-widget-header">记录板</h2>
+				<p class="tips">记录方式：点击+1,9点击变空</p>
+				<table>
+					<tr>
+						<th style="width:50px;"></th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th>
+					</tr>
+					<tr>
+						<td>红桃</td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td>
+					</tr>
+					<tr>
+						<td>方片</td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td>
+					</tr>
+					<tr>
+						<td>黑桃</td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td>
+					</tr>
+					<tr>
+						<td>梅花</td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td>
+					</tr>
+				</table>
+			</div>
 		</div>
+		
 		<div id="operateArea">
+			<!-- <input type="button" value="人齐了，开始" /> -->
 		</div>
 		
 		<div id="selectArea">
@@ -58,59 +88,39 @@
 			<input id="btn_cancel" type="button" value="重新选择" />
 			</div>
 			<div id="guessArea">
-			<p>猜测区(猜错就输了)</p>
-			<select id="guessColor" name="color">
-				<option value="heart">红桃</option>
-				<option value="diamond">方片</option>
-				<option value="spade">黑桃</option>
-				<option value="club">梅花</option>
-			</select>
-			<select id="guessNum" name="num">
-				<option value="1">1</option>
-				<option value="2">2</option>
-				<option value="3">3</option>
-				<option value="4">4</option>
-				<option value="5">5</option>
-				<option value="6">6</option>
-				<option value="7">7</option>
-			</select>
-			<input type="button" id="btn_guess" value="他就是凶手！" />
+				<p class="tips">猜测区(猜错就输了)</p>
+				<select id="guessColor" name="color">
+					<option value="heart">红桃</option>
+					<option value="diamond">方片</option>
+					<option value="spade">黑桃</option>
+					<option value="club">梅花</option>
+				</select>
+				<select id="guessNum" name="num">
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+				</select>
+				<input type="button" id="btn_guess" value="他就是凶手！" />
 			</div>
 		</div>
-		<div id="infoArea">
-			<h2>记录板</h2>
-			<p class="tips">记录方式：点击+1,9点击变空</p>
-			<table>
-				<tr>
-					<th style="width:50px;">可拖拽</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th>
-				</tr>
-				<tr>
-					<td>红桃</td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td>
-				</tr>
-				<tr>
-					<td>方片</td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td>
-				</tr>
-				<tr>
-					<td>黑桃</td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td>
-				</tr>
-				<tr>
-					<td>梅花</td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td>
-				</tr>
-			</table>
-		</div>
+		
 		
 	</div>
 	<script src="lib/jquery-1.10.2.js"></script>
 	<script src="lib/jquery-ui-1.10.4.custom.min.js"></script>
-	<script src="http://172.18.145.54:3000/socket.io/socket.io.js"></script><!--修改为自己的ip地址 -->
+	<script src="http://172.21.85.155:3000/socket.io/socket.io.js"></script><!--修改为自己的ip地址 -->
 	<script>
-	var socket = io.connect('http://172.18.145.54:3000'); //修改为自己的ip地址
+	var socket = io.connect('http://172.21.85.155:3000'); //修改为自己的ip地址
 	$(document).ready(function() {
 		setH();
 		$("#userListCont").draggable();
 		$("#chatArea").draggable();
 		$("#infoArea").draggable();
-		$("#gameMessageArea").draggable();
+		$("#msgCont").draggable();
 		
 		$(window).resize(function() {
 			setH();

@@ -1,5 +1,4 @@
 var nickName;
-var socket = io.connect('http://172.18.145.54:3000');
 var whosTurn;
 var gamerNum;
 var myPokers = [];
@@ -285,9 +284,9 @@ function setH() {
     var w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
     var h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 
-    document.getElementById("gameArea").style.height = (h - 2) + "px";
-    document.getElementById("chatArea").style.height = (h - 152) + "px";
-    document.getElementById("messages").style.height = (h - 186) + "px";
+    //document.getElementById("gameArea").style.height = (h - 2) + "px";
+    //document.getElementById("chatArea").style.height = (h - 152) + "px";
+    //document.getElementById("messages").style.height = (h - 230) + "px";
 }
 //记录table
 $('.record').click(function(e){
