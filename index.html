@@ -25,7 +25,7 @@
 				<ul id="pokerList">
 				</ul>
 		</div>
-		<div id="chatArea">
+		<div id="chatArea" class="panels">
 			<h2 class="ui-widget-header">聊天区</h2>
 			<ul id="messages">
 			</ul>
@@ -34,50 +34,50 @@
 			</div>
 		</div>
 		<div id="mainCont">
-			<div id="msgCont">
+			<div id="msgCont" class="panels">
 				<h2 class="ui-widget-header">游戏信息</h2>
 				<div id="gameMessageArea">
 						
 				</div>
 			</div>
-			<div id="userListCont">
+			<div id="userListCont" class="panels">
 				<h2 class="ui-widget-header">玩家列表</h2>
 				<ul id="userList">
 				</ul>
 			</div>
-			<div id="infoArea">
+			<div id="infoArea" class="panels">
 				<h2 class="ui-widget-header">记录板</h2>
-				<p class="tips">记录方式：点击+1,9点击变空</p>
 				<table>
 					<tr>
 						<th style="width:50px;"></th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th>
 					</tr>
 					<tr>
-						<td>红桃</td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td>
+						<td style="font-size:24px;color:red;" >&#9829;</td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td>
 					</tr>
 					<tr>
-						<td>方片</td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td>
+						<td style="font-size:24px;color:red;" >&#9830;</td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td>
 					</tr>
 					<tr>
-						<td>黑桃</td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td>
+						<td style="font-size:24px;" >&#9824;</td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td>
 					</tr>
 					<tr>
-						<td>梅花</td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td>
+						<td style="font-size:24px;" >&#9827;</td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td>
 					</tr>
 				</table>
 			</div>
 		</div>
 		
 		<div id="operateArea">
-			<!-- <input type="button" value="人齐了，开始" /> -->
+			<input id="btn_ready" type="button" value="人齐了，开始" />
+			<div id="selectArea">
+			<input id="heart" type="button" 
+			value="&#9829;" /><input id="diamond" type="button" 
+			value="&#9830;" /><input id="spade" type="button" 
+			value="&#9824;" /><input id="club" type="button" value="&#9827;" />
+			</div>
 		</div>
 		
-		<div id="selectArea">
-			<input id="heart" type="button" 
-			value="红桃" /><input id="diamond" type="button" 
-			value="方片" /><input id="spade" type="button" 
-			value="黑桃" /><input id="club" type="button" value="梅花" />
-		</div>
+		
 		<div id="dropArea">
 			<p>选择 同花色的3张一条龙<br/>
 			或者 3张相同数字的 <br />
@@ -90,10 +90,10 @@
 			<div id="guessArea">
 				<p class="tips">猜测区(猜错就输了)</p>
 				<select id="guessColor" name="color">
-					<option value="heart">红桃</option>
-					<option value="diamond">方片</option>
-					<option value="spade">黑桃</option>
-					<option value="club">梅花</option>
+					<option class="redIcon" value="heart">&#9829;</option>
+					<option class="redIcon" value="diamond">&#9830;</option>
+					<option class="blackIcon" value="spade">&#9824;</option>
+					<option class="blackIcon" value="club">&#9827;</option>
 				</select>
 				<select id="guessNum" name="num">
 					<option value="1">1</option>
@@ -112,9 +112,10 @@
 	</div>
 	<script src="lib/jquery-1.10.2.js"></script>
 	<script src="lib/jquery-ui-1.10.4.custom.min.js"></script>
-	<script src="http://172.21.85.155:3000/socket.io/socket.io.js"></script><!--修改为自己的ip地址 -->
+	<script src="http://172.18.145.54:3000/socket.io/socket.io.js"></script><!--修改为自己的ip地址 -->
 	<script>
-	var socket = io.connect('http://172.21.85.155:3000'); //修改为自己的ip地址
+	var socket = io.connect('http://172.18.145.54:3000'); //修改为自己的ip地址
+	
 	$(document).ready(function() {
 		setH();
 		$("#userListCont").draggable();

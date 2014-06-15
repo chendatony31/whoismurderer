@@ -4,6 +4,8 @@ body{background:url('../images/bg.gif');}
 ul{list-style-type:none;}
 h2{font-size:16px; text-align:center; margin:8px;}
 .tips{font-size:13px; color:red;}
+.panels{background:#ddd; box-shadow:0 5px 5px #888888}
+#btn_ready{ position:absolute;}
 /* 入口  */
 #welcomeStage{ position:absolute; width:100%; height:100%; 
 	background:#333; text-align:center;}
@@ -15,41 +17,47 @@ h2{font-size:16px; text-align:center; margin:8px;}
 #gameStage{ width:100%; display:none;}
 #gameArea{ width:100%;position:fixed; left:0; border:none;}
 
+
+
 /* 主要区域 用户列表 信息列表 记录板 */
 #mainCont{ position:relative; width:960px; height:auto; margin:0 auto;}
 
-#userListCont{ width:100px;  position:absolute; height:150px; background:#aaa; padding:4px; top:20px; left:10px; border:1px solid #666; }
+#userListCont{ width:150px;  position:absolute; height:150px; padding:4px; top:20px; left:10px; border:1px solid #666; }
 #userList{ width:100%; height:110px; padding:0 8px; }
 
-#gameMessageArea{overflow: auto;}
-#msgCont{position:absolute; top:20px; left:130px;
-	width:400px; height: 400px; border:1px solid #333; background:#aaa;
+#gameMessageArea{height:360px; overflow: auto; padding:0 8px;}
+#msgCont{position:absolute; top:20px; left:180px;
+	width:400px; height: 400px; border:1px solid #333; 
 	padding:4px; }
 
-#infoArea{ position:absolute; top:20px; left:550px;border:1px solid #333; padding:4px;
-	background:#aaa;}
-#infoArea table{ border-collapse:collapse;}
+#infoArea{ position:absolute; width:320px; top:20px; left:600px;border:1px solid #333; padding:4px 4px 10px;}
+#infoArea table{ border-collapse:collapse; margin:0 auto;}
 #infoArea table tr td,th{ width:32px; height:32px;border:1px solid #333; text-align:center;}
+.record{ cursor:pointer;}
+.redIcon{ font-size:22px; color:red;}
+.blackIcon {font-size:22px; color:black;}
 
 /* 各种操作区*/
 #btn_start{ width:110px; height:30px;}
 #dropArea{position:fixed; bottom:170px; left: 760px; display:none;}
-#operateArea{ position:fixed; bottom:0; margin:10px; right:0; width:120px; height:80px; }
-#selectArea {position:fixed; bottom:170px; left: 50px; display:none;}
-#selectArea input { width:60px; height:30px;}
+
+#selectArea {position:absolute; left: 0; display:none;}
+#selectArea input { width:60px; height:30px; font-size:22px;}
 #guessArea{position:fixed; bottom:170px; height:52px; left: 450px; border:1px solid #333 }
+#heart,#diamond{ color:red;}
 
 
-
-/* 扑克区*/
+/* 扑克区 和 操作区*/
+#operateArea{ position:fixed; bottom:160px; left:0; width:960px; right:0; height:50px;margin:auto; border:1px solid #333; padding:5px; }
 #pokerArea{ position:fixed;left:0;right:0;margin:auto;bottom:0; width:960px; height:150px; background:#333; padding:5px;}
-#pokerList li{ padding:5px; float:left; width:80px; height:140px; background:#abc;border:1px solid;
+#pokerList li{ padding:0 5px;position:relative; margin-left:-50px; float:left; width:80px; height:140px; background:#abc;border:1px solid;
 border-radius:5px; }
-.drapablePoker{ background:#6bc !important; position:relative; top:-10px;}
+#pokerList li:first-child{margin-left:0; }
+.drapablePoker{ background:#6bc !important;  top:-10px;}
 
 /* 聊天区*/
 #chatArea{width:200px; height:500px; position:fixed; top:20px; right:0;border:1px solid #666;
-	background:#aaa; padding:4px;}
+	 padding:4px;}
 #messages{ width:100%; height:422px; overflow:auto; }
 #messages li{ padding:8px 16px;}
 #messages li:nth-child(even) {background: #eee}
