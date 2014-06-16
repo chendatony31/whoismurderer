@@ -230,15 +230,13 @@ $('#btn_guess').click(function(){
 socket.on('bingo',function(data){
 	if(data.who == nickName){
 		alert('恭喜你！你抓住了凶手！');
-		$('#selectArea').css('display','none');
-		$('#dropArea').css('display','none');
-		$('#guessArea').css('display','none');
-		$('#btn_ready').css('display','block');
+		gameOver();
+		
 	}else{
 		var resultShow = '神探'+data.who+'抓住了凶手'+ formatPoker(data.pokerid);
 		$('#gameMessageArea').html(resultShow); 
 		alert('神探'+data.who+'抓住了凶手');
-		$('#btn_ready').css('display','block');
+		gameOver();
 	}
 });
 socket.on('guess failed',function(data){
@@ -277,12 +275,25 @@ socket.on('show its pokers', function(data){
 
 //准备按钮点击
 $('#btn_ready').click(function(){
-	$('#pokerList').html('');
+
 	$('#gameMessageArea').html('');
 	$('.record').html('');
 	socket.emit('im ready');
 	$('#btn_ready').css('display','none');
 });
+//监听游戏结束
+socket.on('game over', function(){
+	gameOver();
+});
+
+//游戏结束
+function gameOver(){
+	$('#selectArea').css('display','none');
+	$('#dropArea').css('display','none');
+	$('#guessArea').css('display','none');
+	$('#pokerList').html('');
+	$('#btn_ready').css('display','block');
+}
 //点击重新选择按钮
 $('#btn_cancel').click(function(){
 	dropPokers();
