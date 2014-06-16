@@ -59,29 +59,16 @@ function(userList) {
     }
 });
 
-//房主进入
-socket.on('host joined',
-function(){
-	$('#btn_start').css('display','block');
-});
 
 
 socket.on('test',function(){alert('gege');});
-//开始游戏
-function gameon(){
-	$('#pokerList').html('');
-	socket.emit('game start');
-	$('#operateArea').html('');
-	$('#operateArea').append('<input id="btn_restart" type="button" value="重新开始游戏" onclick="gameon()" />');
-
-}
 
 //接收初始牌
 socket.on('send poker',function(data){
 	myPokers = data.poker;
 	gamerNum = data.num;
 	listMyPokers(myPokers);
-	
+
 });
 
 //公共牌
@@ -104,6 +91,7 @@ function listMyPokers(myPokers){
 socket.on('whos turn', function(who){
 	if(who == nickName){
 		$('#selectArea').css('display','block');
+		$('#guessArea').css('display','block');
 	}
 	whosTurn=who;
 	$('#gameMessageArea').prepend($('<p>').text(whosTurn + ' 开始要牌'));
@@ -217,12 +205,14 @@ $('#btn_drop').click(function(){
 		listMyPokers(myPokers);
 		dropList=[];
 		$('#dropArea').css('display','none');
+		$('#guessArea').css('display','none');
 	}else if(dropList.length==1){
 		socket.emit('drop onePoker' ,dropList[0]);
 		delPoker(dropList[0]);
 		listMyPokers(myPokers);
 		dropList=[];
 		$('#dropArea').css('display','none');
+		$('#guessArea').css('display','none');
 	}else{ 
 		alert('扔牌数量不对');
 		dropPokers();
@@ -239,8 +229,17 @@ $('#btn_guess').click(function(){
 //猜测结果
 socket.on('bingo',function(data){
 	if(data.who == nickName){
-		$('#gameMessageArea').prepend($('<p>').text('你赢了~~'));
-	}else{$('#gameMessageArea').prepend($('<p>').html('小伙伴'+data.who+'猜对了~~是'+ formatPoker(data.pokerid))); }
+		alert('恭喜你！你抓住了凶手！');
+		$('#selectArea').css('display','none');
+		$('#dropArea').css('display','none');
+		$('#guessArea').css('display','none');
+		$('#btn_ready').css('display','block');
+	}else{
+		var resultShow = '神探'+data.who+'抓住了凶手'+ formatPoker(data.pokerid);
+		$('#gameMessageArea').html(resultShow); 
+		alert('神探'+data.who+'抓住了凶手');
+		$('#btn_ready').css('display','block');
+	}
 });
 socket.on('guess failed',function(data){
 	if(data.who == nickName){
@@ -278,6 +277,9 @@ socket.on('show its pokers', function(data){
 
 //准备按钮点击
 $('#btn_ready').click(function(){
+	$('#pokerList').html('');
+	$('#gameMessageArea').html('');
+	$('.record').html('');
 	socket.emit('im ready');
 	$('#btn_ready').css('display','none');
 });

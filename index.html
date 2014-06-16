@@ -21,10 +21,7 @@
 			
 			
 		</div>
-		<div id="pokerArea">
-				<ul id="pokerList">
-				</ul>
-		</div>
+		
 		<div id="chatArea" class="panels">
 			<h2 class="ui-widget-header">聊天区</h2>
 			<ul id="messages">
@@ -47,6 +44,7 @@
 			</div>
 			<div id="infoArea" class="panels">
 				<h2 class="ui-widget-header">记录板</h2>
+				<p class="tips">TIPs: 点击以标记 X  ?  &#8730; 和 空白</p>
 				<table>
 					<tr>
 						<th style="width:50px;"></th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th>
@@ -67,28 +65,10 @@
 			</div>
 		</div>
 		
-		<div id="operateArea">
-			<input id="btn_ready" type="button" value="人齐了，开始" />
-			<div id="selectArea">
-			<input id="heart" type="button" 
-			value="&#9829;" /><input id="diamond" type="button" 
-			value="&#9830;" /><input id="spade" type="button" 
-			value="&#9824;" /><input id="club" type="button" value="&#9827;" />
-			</div>
-		</div>
-		
-		
-		<div id="dropArea">
-			<p>选择 同花色的3张一条龙<br/>
-			或者 3张相同数字的 <br />
-			第一张点击的大家都能看到 <br />
-			如果都没有 请随便选择一张</p>
-			<div>
-			<input id="btn_drop" type="button" value="确认出牌" />
-			<input id="btn_cancel" type="button" value="重新选择" />
-			</div>
+		<div id="operateArea" class="panels">
+			<h2 class="ui-widget-header">操作区</h2>
+			<!-- 猜测区 -->
 			<div id="guessArea">
-				<p class="tips">猜测区(猜错就输了)</p>
 				<select id="guessColor" name="color">
 					<option class="redIcon" value="heart">&#9829;</option>
 					<option class="redIcon" value="diamond">&#9830;</option>
@@ -104,11 +84,35 @@
 					<option value="6">6</option>
 					<option value="7">7</option>
 				</select>
-				<input type="button" id="btn_guess" value="他就是凶手！" />
+				<input type="button" id="btn_guess" title="猜错就输了~ 请慎重" value="他就是凶手！" />
 			</div>
+			<!-- 准备开始按钮 -->
+			<input id="btn_ready" class="btn_op" type="button" value="人齐了，开始" />
+			<!-- 要牌 -->
+			<div id="selectArea">要牌:
+			<input id="heart" type="button" 
+			value="&#9829;" /><input id="diamond" type="button" 
+			value="&#9830;" /><input id="spade" type="button" 
+			value="&#9824;" /><input id="club" type="button" value="&#9827;" />
+			</div>
+			<div id="dropArea">
+			<p class="tips">TIPs: 选择要出的牌 点击‘确认出牌’
+			<input id="btn_drop" class="btn_op" type="button" value="确认出牌" />
+			<input id="btn_cancel" class="btn_op" type="button" value="重新选择" />
+			</p>
+			</div>
+			
+		</div>
 		</div>
 		
 		
+		
+		
+		
+		<div id="pokerArea">
+				<ul id="pokerList">
+				</ul>
+		</div>
 	</div>
 	<script src="lib/jquery-1.10.2.js"></script>
 	<script src="lib/jquery-ui-1.10.4.custom.min.js"></script>
@@ -122,7 +126,8 @@
 		$("#chatArea").draggable();
 		$("#infoArea").draggable();
 		$("#msgCont").draggable();
-		
+		$("#operateArea").draggable();
+		$( document ).tooltip();
 		$(window).resize(function() {
 			setH();
 		});
