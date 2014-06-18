@@ -1,140 +1,251 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,user-scalable=no" />
-	<title>谁是凶手</title>
-	<link href="css/main.css" rel="stylesheet" />
-	<link href="lib/jquery-ui-1.10.4.custom.css" rel="stylesheet" />
-</head>
-<body>
-	<div id="welcomeStage">
-		<h1>谁是凶手</h1>
-		<p>找出谁是凶手！</p>
-		<input type="text" id="input_nickname" maxlength="14" autofocus="autofocus" placeholder="输入你的昵称" /> 
-		<button id="btn_enter">进入</button>
-	</div>
-	
-	<div id="gameStage">
-		
-		<div id="gameArea">
-			
-			
-		</div>
-		
-		<div id="chatArea" class="panels">
-			<h2 class="ui-widget-header">聊天区</h2>
-			<ul id="messages">
-			</ul>
-			<div id="chatForm">
-				<input id="input_msg" type="text" /><input id="btnSend" type="button" value="发送" />
-			</div>
-		</div>
-		<div id="mainCont">
-			<div id="msgCont" class="panels">
-				<h2 class="ui-widget-header">游戏信息</h2>
-				<div id="gameMessageArea">
-						
-				</div>
-			</div>
-			<div id="userListCont" class="panels">
-				<h2 class="ui-widget-header">玩家列表</h2>
-				<ul id="userList">
-				</ul>
-			</div>
-			<div id="infoArea" class="panels">
-				<h2 class="ui-widget-header">记录板</h2>
-				<p class="tips">TIPs: 点击以标记 X  ?  &#8730; 和 空白</p>
-				<table>
-					<tr>
-						<th style="width:50px;"></th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th>
-					</tr>
-					<tr>
-						<td style="font-size:24px;color:red;" >&#9829;</td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td>
-					</tr>
-					<tr>
-						<td style="font-size:24px;color:red;" >&#9830;</td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td>
-					</tr>
-					<tr>
-						<td style="font-size:24px;" >&#9824;</td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td>
-					</tr>
-					<tr>
-						<td style="font-size:24px;" >&#9827;</td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td><td class="record"></td>
-					</tr>
-				</table>
-			</div>
-		</div>
-		
-		<div id="operateArea" class="panels">
-			<h2 class="ui-widget-header">操作区</h2>
-			<!-- 猜测区 -->
-			<div id="guessArea">
-				<select id="guessColor" name="color">
-					<option class="redIcon" value="heart">&#9829;</option>
-					<option class="redIcon" value="diamond">&#9830;</option>
-					<option class="blackIcon" value="spade">&#9824;</option>
-					<option class="blackIcon" value="club">&#9827;</option>
-				</select>
-				<select id="guessNum" name="num">
-					<option value="1">1</option>
-					<option value="2">2</option>
-					<option value="3">3</option>
-					<option value="4">4</option>
-					<option value="5">5</option>
-					<option value="6">6</option>
-					<option value="7">7</option>
-				</select>
-				<input type="button" id="btn_guess" title="猜错就输了~ 请慎重" value="他就是凶手！" />
-			</div>
-			<!-- 准备开始按钮 -->
-			<input id="btn_ready" class="btn_op" type="button" value="人齐了，开始" />
-			<!-- 要牌 -->
-			<div id="selectArea">要牌:
-			<input id="heart" type="button" 
-			value="&#9829;" /><input id="diamond" type="button" 
-			value="&#9830;" /><input id="spade" type="button" 
-			value="&#9824;" /><input id="club" type="button" value="&#9827;" />
-			</div>
-			<div id="dropArea">
-			<p class="tips">TIPs: 选择要出的牌 点击‘确认出牌’
-			<input id="btn_drop" class="btn_op" type="button" value="确认出牌" />
-			<input id="btn_cancel" class="btn_op" type="button" value="重新选择" />
-			</p>
-			</div>
-			
-		</div>
-		</div>
-		
-		
-		
-		
-		
-		<div id="pokerArea">
-				<ul id="pokerList">
-				</ul>
-		</div>
-	</div>
-	<script src="lib/jquery-1.10.2.js"></script>
-	<script src="lib/jquery-ui-1.10.4.custom.min.js"></script>
-	<script src="http://172.18.145.54:3000/socket.io/socket.io.js"></script><!--修改为自己的ip地址 -->
-	<script>
-	var socket = io.connect('http://172.18.145.54:3000'); //修改为自己的ip地址
-	
-	$(document).ready(function() {
-		setH();
-		$("#userListCont").draggable();
-		$("#chatArea").draggable();
-		$("#infoArea").draggable();
-		$("#msgCont").draggable();
-		$("#operateArea").draggable();
-		$( document ).tooltip();
-		$(window).resize(function() {
-			setH();
-		});
-	});
-	</script>
-	
-	<script src="app.js"></script>
-	
-</body>
+    
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,user-scalable=no" />
+        <title>
+            谁是凶手
+        </title>
+        <link href="css/main.css" rel="stylesheet" />
+        <link href="lib/jquery-ui-1.10.4.custom.css" rel="stylesheet" />
+    </head>
+    
+    <body>
+        <div id="loading">
+            <img src="images/loading.gif" />
+        </div>
+        <div id="welcomeStage">
+            <h1>
+                谁是凶手
+            </h1>
+            <p>
+                找出谁是凶手！
+            </p>
+            <input type="text" id="input_nickname" maxlength="14" autofocus="autofocus"
+            placeholder="输入你的昵称" />
+            <button id="btn_enter">
+                进入
+            </button>
+        </div>
+        <div id="gameStage">
+            <div id="gameArea">
+            </div>
+            <div id="chatArea" class="panels">
+                <h2 class="ui-widget-header">
+                    聊天区
+                </h2>
+                <ul id="messages">
+                </ul>
+                <div id="chatForm">
+                    <input id="input_msg" type="text" />
+                    <input id="btnSend" type="button" value="发送" />
+                </div>
+            </div>
+            <div id="mainCont">
+                <div id="msgCont" class="panels">
+                    <h2 class="ui-widget-header">
+                        游戏信息
+                    </h2>
+                    <div id="gameMessageArea">
+                    </div>
+                </div>
+                <div id="userListCont" class="panels">
+                    <h2 class="ui-widget-header">
+                        玩家列表
+                    </h2>
+                    <ul id="userList">
+                    </ul>
+                </div>
+                <div id="infoArea" class="panels">
+                    <h2 class="ui-widget-header">
+                        记录板
+                    </h2>
+                    <p class="tips">
+                        TIPs: 点击以标记 X ? &#8730; 和 空白
+                    </p>
+                    <table>
+                        <tr>
+                            <th style="width:50px;">
+                            </th>
+                            <th>
+                                1
+                            </th>
+                            <th>
+                                2
+                            </th>
+                            <th>
+                                3
+                            </th>
+                            <th>
+                                4
+                            </th>
+                            <th>
+                                5
+                            </th>
+                            <th>
+                                6
+                            </th>
+                            <th>
+                                7
+                            </th>
+                        </tr>
+                        <tr>
+                            <td style="font-size:24px;color:red;">
+                                &#9829;
+                            </td>
+                            <td class="record">
+                            </td>
+                            <td class="record">
+                            </td>
+                            <td class="record">
+                            </td>
+                            <td class="record">
+                            </td>
+                            <td class="record">
+                            </td>
+                            <td class="record">
+                            </td>
+                            <td class="record">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="font-size:24px;color:red;">
+                                &#9830;
+                            </td>
+                            <td class="record">
+                            </td>
+                            <td class="record">
+                            </td>
+                            <td class="record">
+                            </td>
+                            <td class="record">
+                            </td>
+                            <td class="record">
+                            </td>
+                            <td class="record">
+                            </td>
+                            <td class="record">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="font-size:24px;">
+                                &#9824;
+                            </td>
+                            <td class="record">
+                            </td>
+                            <td class="record">
+                            </td>
+                            <td class="record">
+                            </td>
+                            <td class="record">
+                            </td>
+                            <td class="record">
+                            </td>
+                            <td class="record">
+                            </td>
+                            <td class="record">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="font-size:24px;">
+                                &#9827;
+                            </td>
+                            <td class="record">
+                            </td>
+                            <td class="record">
+                            </td>
+                            <td class="record">
+                            </td>
+                            <td class="record">
+                            </td>
+                            <td class="record">
+                            </td>
+                            <td class="record">
+                            </td>
+                            <td class="record">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div id="operateArea" class="panels">
+                <h2 class="ui-widget-header">
+                    操作区
+                </h2>
+                <!-- 猜测区 -->
+                <div id="guessArea">
+                    <select id="guessColor" name="color">
+                        <option class="redIcon" value="heart">
+                            &#9829;
+                        </option>
+                        <option class="redIcon" value="diamond">
+                            &#9830;
+                        </option>
+                        <option class="blackIcon" value="spade">
+                            &#9824;
+                        </option>
+                        <option class="blackIcon" value="club">
+                            &#9827;
+                        </option>
+                    </select>
+                    <select id="guessNum" name="num">
+                        <option value="1">
+                            1
+                        </option>
+                        <option value="2">
+                            2
+                        </option>
+                        <option value="3">
+                            3
+                        </option>
+                        <option value="4">
+                            4
+                        </option>
+                        <option value="5">
+                            5
+                        </option>
+                        <option value="6">
+                            6
+                        </option>
+                        <option value="7">
+                            7
+                        </option>
+                    </select>
+                    <input type="button" id="btn_guess" title="猜错就输了~ 请慎重" value="他就是凶手！"
+                    />
+                </div>
+                <!-- 准备开始按钮 -->
+                <input id="btn_ready" class="btn_op" type="button" value="人齐了，开始" />
+                <!-- 要牌 -->
+                <div id="selectArea">
+                    要牌:
+                    <input id="heart" type="button" value="&#9829;" />
+                    <input id="diamond" type="button" value="&#9830;" />
+                    <input id="spade" type="button" value="&#9824;" />
+                    <input id="club" type="button" value="&#9827;" />
+                </div>
+                <div id="dropArea">
+                    <p class="tips">
+                        TIPs: 选择要出的牌 点击‘确认出牌’
+                        <input id="btn_drop" class="btn_op" type="button" value="确认出牌" />
+                        <input id="btn_cancel" class="btn_op" type="button" value="重新选择" />
+                    </p>
+                </div>
+            </div>
+            <div id="pokerArea">
+                <ul id="pokerList">
+                </ul>
+            </div>
+        </div>
+        <script src="lib/jquery-1.10.2.js">
+        </script>
+        <script src="lib/jquery-ui-1.10.4.custom.min.js">
+        </script>
+        <script src="lib/socket.io.js">
+        </script>
+        <script src="app.js">
+        </script>
+    </body>
+
 </html>

@@ -7,7 +7,10 @@ h2{font-size:16px; text-align:center; margin:8px;}
 .panels{background:#ddd; box-shadow:0 5px 5px #888888}
 #btn_ready{ position:absolute;}
 /* 入口  */
-#welcomeStage{ position:absolute; width:100%; height:100%; 
+
+#loading { position:absolute; width:100%; height:100%; background:#333;}
+#loading img{ position:absolute; margin:auto; top:0; bottom:0; left:0; right:0;}
+#welcomeStage{ position:absolute; width:100%; height:100%; display:none;
 	background:#333; text-align:center;}
 #welcomeStage *{ margin-top:50px; color:#ddd; }
 #input_nickname{ width:200px; height:40px; background:#333; border:none;
