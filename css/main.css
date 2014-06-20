@@ -34,29 +34,32 @@ h2{font-size:16px; text-align:center; margin:8px;}
 	padding:4px; }
 
 #infoArea{ position:absolute; width:320px; top:20px; left:600px;border:1px solid #333; padding:4px 4px 10px;}
-#infoArea table{ border-collapse:collapse; margin:0 auto;}
+#infoArea table{position:relative; border-collapse:collapse; margin:0 auto;}
 #infoArea table tr td,th{ width:32px; height:32px;border:1px solid #333; text-align:center;}
 .record{ cursor:pointer;}
 .redIcon{ font-size:22px; color:red;}
 .blackIcon {font-size:22px; color:black;}
 .btn_op{ height:30px; margin-left:8px;}
 
-/* 各种操作区*/
+
+/* 底部区域*/
+
+#footerCont{ position:fixed;left:0;right:0;margin:auto;bottom:0; width:960px; height:150px; background:#333; padding:5px; }
+
+/* 各种操作区 和 扑克区*/ 
 #btn_start{ width:110px; height:30px; }
 #dropArea{position:absolute; left:12px; display:none;}
 
 #selectArea {position:absolute; left: 12px; display:none;}
 #selectArea input { width:60px; height:30px; font-size:22px;}
-#guessArea{position:absolute;  right:12px; display:none; }
+#guessArea{position:absolute;  right:12px;  bottom:8px ; display:none; }
 #guessArea input { height:30px; font-size:13px;}
 #guessArea #guessColor { font-size:18px; height:30px; vertical-align:middle; } 
 #guessArea #guessNum {height:30px; vertical-align:middle;font-size:18px;}
 #heart,#diamond{ color:red;}
 
-
-/* 扑克区 和 操作区*/
-#operateArea{ position:fixed; bottom:160px; left:0; width:960px; right:0; height:80px;margin:auto; border:1px solid #333; padding:5px; }
-#pokerArea{ position:fixed;left:0;right:0;margin:auto;bottom:0; width:960px; height:150px; background:#333; padding:5px;}
+#operateArea{ position:absolute; right:10px; top:0; bottom:0;  width:360px; height:130px;margin:auto; border:1px solid #333; padding:5px; background:#ddd; }
+#pokerArea{}
 #pokerList li{ padding:0 5px;position:relative; margin-left:-50px; float:left; width:80px; height:140px; background:#abc;border:1px solid;
 border-radius:5px; }
 #pokerList li:first-child{margin-left:0; }
@@ -75,3 +78,16 @@ border-radius:5px; }
 
 .ui-draggable:before{content:url('../images/move.png'); position:absolute; left:-8px; top:-10px; opacity:0.3;}
 .ui-draggable:hover:before{opacity:1;}
+
+@media screen and (max-width: 760px) {
+	#footerCont{ width:100%; padding:0;margin:0; border:none; height:120px;}
+	#operateArea{position: fixed; width:100%; padding:0;margin:0; border:none;
+		bottom:120px; left:0; right:0;top:auto; height:60px;}
+	h2{font-size:13px;margin:0 0 4px 0;}
+	#infoArea{position: fixed; width:100%; padding:0;margin:0; border:none; 
+		bottom:180px; left:0; right:0;top:auto; height:60px;}
+}
+
+
+
+

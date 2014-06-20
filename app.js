@@ -1,21 +1,20 @@
 $(document).ready(function() {
-    var socket = io.connect('http://59.46.201.50:3000'); 
+    var socket = io.connect('http://172.18.145.54:3000'); 
     socket.on('server is Ok',
     function() {
         console.log('连接上了');
         $('#loading').css("display", "none");
         $('#welcomeStage').css("display", "block");
     });
-    setH();
+    //setH();
     $("#userListCont").draggable();
     $("#chatArea").draggable();
     $("#infoArea").draggable();
     $("#msgCont").draggable();
-    $("#operateArea").draggable();
     $(document).tooltip();
-    $(window).resize(function() {
+    /* $(window).resize(function() {
         setH();
-    });
+    }); */
 
     var nickName;
     var whosTurn;
@@ -166,6 +165,7 @@ $(document).ready(function() {
     socket.on('note user login',
     function(userList) {
         $('#userList').html('');
+		gameOver();
         for (i = 0; i < userList.users.length; i++) {
             $('#userList').append($('<li>').text(userList.users[i]));
         }
@@ -304,27 +304,6 @@ $(document).ready(function() {
             }
         }
     }
-    //监听showmessage
-    socket.on('show message',
-    function(data) {
-        $('#messages').prepend($('<li>').text(data.who + ":" + data.msg));
-    });
-
-    //点击发送向后台发送消息
-    $("#btnSend").click(send_message);
-
-    function send_message() {
-        if ($('#input_msg').val()) {
-            socket.emit('send message', {
-                msg: $('#input_msg').val(),
-                who: nickName
-            });
-            $('#input_msg').val('');
-            return false;
-        } else {
-            return false;
-        }
-    }
     //点击出牌按钮
     $('#btn_drop').click(function() {
         if (dropList.length == 3) {
@@ -443,14 +422,14 @@ $(document).ready(function() {
         dropPokers();
     });
     //根据浏览器动态设置高度
-    function setH() {
-        var w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-        var h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+    //function setH() {
+    //    var w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    //    var h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 
-        //document.getElementById("gameArea").style.height = (h - 2) + "px";
-        //document.getElementById("chatArea").style.height = (h - 152) + "px";
-        //document.getElementById("messages").style.height = (h - 230) + "px";
-    }
+    //	document.getElementById("gameArea").style.height = (h - 2) + "px";
+    //	document.getElementById("chatArea").style.height = (h - 152) + "px";
+    //	document.getElementById("messages").style.height = (h - 230) + "px";
+    //}
     //记录table
     $('.record').click(function(e) {
         var curIcon = $(this).html();
@@ -473,6 +452,26 @@ $(document).ready(function() {
     function formatPoker(id) {
         return _POKERS[id].color + _POKERS[id].num
     }
+	 //监听showmessage
+	 
+    /*socket.on('show message',
+    function(data) {
+        $('#messages').prepend($('<li>').text(data.who + ":" + data.msg));
+    });
+	function send_message() {
+        if ($('#input_msg').val()) {
+            socket.emit('send message', {
+                msg: $('#input_msg').val(),
+                who: nickName
+            });
+            $('#input_msg').val('');
+            return false;
+        } else {
+            return false;
+        }
+    }
+    //点击发送向后台发送消息
+    $("#btnSend").click(send_message);
     //按键控制
     document.onkeydown = function() {
         keydown()
@@ -481,6 +480,6 @@ $(document).ready(function() {
         if (event.keyCode == 13) {
             send_message();
         }
-    }
+    }*/
 
 });
