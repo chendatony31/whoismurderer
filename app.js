@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    var socket = io.connect('http://172.18.145.54:3000'); 
+    var socket = io.connect('http://172.21.85.155:3000'); 
     socket.on('server is Ok',
     function() {
         console.log('连接上了');
@@ -7,11 +7,11 @@ $(document).ready(function() {
         $('#welcomeStage').css("display", "block");
     });
     //setH();
-    $("#userListCont").draggable();
-    $("#chatArea").draggable();
-    $("#infoArea").draggable();
-    $("#msgCont").draggable();
-    $(document).tooltip();
+    //$("#userListCont").draggable();
+    //$("#chatArea").draggable();
+    //$("#infoArea").draggable();
+    //$("#msgCont").draggable();
+    //$(document).tooltip();
     /* $(window).resize(function() {
         setH();
     }); */
@@ -218,7 +218,7 @@ $(document).ready(function() {
         $('#gameMessageArea').prepend($('<p>').text(whosTurn + ' 开始要牌'));
     });
     //要牌
-    $('#selectArea').click(function(e) {
+    $('#selectArea input').click(function(e) {
         var choice = e.target.id;
         socket.emit('user order', choice);
         reNum = 0;
@@ -353,6 +353,7 @@ $(document).ready(function() {
             gameOver();
         }
     });
+	//猜错了
     socket.on('guess failed',
     function(data) {
         if (data.who == nickName) {

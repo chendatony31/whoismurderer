@@ -80,12 +80,29 @@ border-radius:5px; }
 .ui-draggable:hover:before{opacity:1;}
 
 @media screen and (max-width: 760px) {
-	#footerCont{ width:100%; padding:0;margin:0; border:none; height:120px;}
+	#footerCont{ width:100%; padding:0;margin:0; border:none; height:60px;}
 	#operateArea{position: fixed; width:100%; padding:0;margin:0; border:none;
-		bottom:120px; left:0; right:0;top:auto; height:60px;}
+		bottom:60px; left:0; right:0;top:auto; height:60px; border-bottom:1px solid #000;}
 	h2{font-size:13px;margin:0 0 4px 0;}
 	#infoArea{position: fixed; width:100%; padding:0;margin:0; border:none; 
-		bottom:180px; left:0; right:0;top:auto; height:60px;}
+		bottom:120px; left:0; right:0;top:auto; height:148px;}
+	#infoArea table{ width:100%;}	
+	#infoArea table tr td,th{ width:32px; height:15px;border:1px solid #333; text-align:center;}
+	#msgCont{width:100%;}
+	.tips{display:none;}
+	#mainCont{ position:relative; width:100%; height:auto; margin:0 auto;}
+	#gameMessageArea{height:360px; overflow: auto; padding:0 8px;}
+	#msgCont{position:fixed; width:100%; top:0; left:0;
+		height:400px; 
+		padding:0; border:none; }
+	.redIcon{ font-size:15px; }
+	.blackIcon {font-size:15px;}
+	#userListCont{display:none;}
+	.btn_op{height:auto;}
+	#selectArea {font-size:13px;}
+	#selectArea input{width:auto; height:auto; font-size:16px;}
+	#pokerList li {height:41px; width:30px; padding:16px 0 0 2px; margin-left:-16px;}
+	#pokerList li span {position:absolute; top:0;}
 }
 
 
