@@ -13,7 +13,10 @@
     
     <body>
         <div id="loading">
-            <img src="images/loading.gif" />
+			<div id="loadingImg">
+				<div class="circle"></div>
+				<div class="circle1"></div>
+			</div>
         </div>
         <div id="welcomeStage">
             <h1>
@@ -53,13 +56,17 @@
                     <div id="gameMessageArea">
                     </div>
                 </div>
+				
                 <div id="userListCont" class="panels">
                     <h2 class="ui-widget-header">
                         玩家列表
                     </h2>
+					
                     <ul id="userList">
                     </ul>
+					
                 </div>
+				<div id="userNumCont">玩家数量:<span id="userNum"></span></div>
                 <div id="infoArea" class="panels">
                     <h2 class="ui-widget-header">
                         记录板
@@ -133,10 +140,7 @@
             </div>
             
 			<div id="footerCont">
-				<div id="pokerArea">
-					<ul id="pokerList">
-					</ul>
-				</div>
+				
 				<div id="operateArea">
 					<h2 class="ui-widget-header">
 						操作区
@@ -156,8 +160,7 @@
 							<option class="blackIcon" value="club">
 								&#9827;
 							</option>
-						</select>
-						<select id="guessNum" name="num">
+						</select><select id="guessNum" name="num">
 							<option value="1">
 								1
 							</option>
@@ -179,8 +182,8 @@
 							<option value="7">
 								7
 							</option>
-						</select>
-						<input type="button" id="btn_guess" title="猜错就输了~ 请慎重" value="他就是凶手！"
+						
+						</select><input type="button" class="btn_op" id="btn_guess" title="猜错就输了~ 请慎重" value="我猜了"
 						/>
 					</div>
 					<!-- 准备开始按钮 -->
@@ -188,18 +191,22 @@
 					<!-- 要牌 -->
 					<div id="selectArea">
 						要牌:
-						<input id="heart" type="button" value="&#9829;" />
-						<input id="diamond" type="button" value="&#9830;" />
-						<input id="spade" type="button" value="&#9824;" />
-						<input id="club" type="button" value="&#9827;" />
+						<input id="heart" type="button" value="&#9829;" 
+						/><input id="diamond" type="button" value="&#9830;" 
+						/><input id="spade" type="button" value="&#9824;" 
+						/><input id="club" type="button" value="&#9827;" />
 					</div>
 					<div id="dropArea">
-						<p class="tips">
-							TIPs: 选择要出的牌 点击‘确认出牌’
-							<input id="btn_drop" class="btn_op" type="button" value="确认出牌" />
-							<input id="btn_cancel" class="btn_op" type="button" value="重新选择" />
-						</p>
+						
+							<p class="tips">TIPs: 选择要出的牌 点击‘确认出牌’</p>
+							<input id="btn_drop" class="btn_op" type="button" value="确认出牌" 
+							/><input id="btn_cancel" class="btn_op" type="button" value="重新选择" />
+						
 					</div>
+				</div>
+				<div id="pokerArea">
+					<ul id="pokerList">
+					</ul>
 				</div>
 			</div>
 		</div>

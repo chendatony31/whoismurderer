@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    var socket = io.connect('http://172.21.85.155:3000'); 
+    var socket = io.connect('http://172.18.145.54:3000'); 
     socket.on('server is Ok',
     function() {
         console.log('连接上了');
@@ -169,6 +169,7 @@ $(document).ready(function() {
         for (i = 0; i < userList.users.length; i++) {
             $('#userList').append($('<li>').text(userList.users[i]));
         }
+		$('#userNum').html(userList.users.length);
     });
 
     socket.on('test',
@@ -238,13 +239,15 @@ $(document).ready(function() {
                 isHaveColor = true;
                 var pid = "#p" + myPokers[i];
                 $(pid).addClass('drapablePoker').click(function(e) {
-                    var deliveredId = e.target.id.substring(1);
-                    socket.emit('delivered poker', {
-                        who: nickName,
-                        poker: deliveredId
-                    });
-                    $('#gameMessageArea').prepend($('<p>').html('你给了' + whosTurn + _POKERS[deliveredId].color + _POKERS[deliveredId].num));
-                    delPoker(deliveredId);
+					if(e.target.tagName == 'LI'){
+						var deliveredId = e.target.id.substring(1);
+						socket.emit('delivered poker', {
+							who: nickName,
+							poker: deliveredId
+						});
+						$('#gameMessageArea').prepend($('<p>').html('你给了' + whosTurn + _POKERS[deliveredId].color + _POKERS[deliveredId].num));
+						delPoker(deliveredId);
+					}
                 });
             }
         }
