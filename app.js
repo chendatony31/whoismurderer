@@ -1,5 +1,5 @@
-$(document).ready(function() {
-    var socket = io.connect('http://172.18.145.54:3000'); 
+﻿$(document).ready(function() {
+    var socket = io.connect('http://59.46.201.50:3000'); 
     socket.on('server is Ok',
     function() {
         console.log('连接上了');
@@ -156,10 +156,14 @@ $(document).ready(function() {
         if ($('#input_nickname').val()) {
             nickName = $('#input_nickname').val();
             socket.emit('user login', nickName);
-            $('#welcomeStage').css("display", "none");
-            $('#gameStage').css("display", "block");
         }
     }
+	socket.on('login okornot',function(data){
+		if(data){
+			$('#welcomeStage').css("display", "none");
+            $('#gameStage').css("display", "block");
+		}else{ alert('用户名重复');}
+	});
 
     //监听用户登录登出
     socket.on('note user login',
@@ -283,6 +287,7 @@ $(document).ready(function() {
         dropNum = 0;
         dropList = [];
         $('#dropArea').css('display', 'block');
+		$('#btn_cancel').css('display','none');
         for (var i = 0; i < myPokers.length; i++) {
             var pid = "#p" + myPokers[i];
             $(pid).removeClass('drapablePoker');
@@ -290,6 +295,7 @@ $(document).ready(function() {
             $(pid).bind("click",
             function(e) {
                 $(e.target).addClass('drapablePoker');
+				$('#btn_cancel').css('display','inline');
                 dropNum++;
                 var dropId = e.target.id.substring(1);
                 dropList.push(dropId);
@@ -334,13 +340,16 @@ $(document).ready(function() {
     });
     //guess!
     $('#btn_guess').click(function() {
-        var color = $('#guessColor').val();
-        var num = $('#guessNum').val();
-        var id = (_COLOR[color] + num) * 1;
-        socket.emit('guess', {
-            pokerid: id,
-            who: nickName
-        });
+		var g = confirm('猜错就输了哦~确定要猜么？');
+		if(g == true){
+			var color = $('#guessColor').val();
+			var num = $('#guessNum').val();
+			var id = (_COLOR[color] + num) * 1;
+			socket.emit('guess', {
+				pokerid: id,
+				who: nickName
+			});
+		}else{ return false}
     });
     //猜测结果
     socket.on('bingo',
