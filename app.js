@@ -1,21 +1,12 @@
 ﻿$(document).ready(function() {
-    var socket = io.connect('http://59.46.201.50:3000'); 
+    var socket = io.connect('http://172.18.145.54:3000'); 
     socket.on('server is Ok',
     function() {
         console.log('连接上了');
         $('#loading').css("display", "none");
         $('#welcomeStage').css("display", "block");
     });
-    //setH();
-    //$("#userListCont").draggable();
-    //$("#chatArea").draggable();
-    //$("#infoArea").draggable();
-    //$("#msgCont").draggable();
-    //$(document).tooltip();
-    /* $(window).resize(function() {
-        setH();
-    }); */
-
+	
     var nickName;
     var whosTurn;
     var gamerNum;
@@ -36,132 +27,57 @@
         club: '3'
     };
     var _POKERS = {
-        1 : {
-            color: '<span class="redIcon">&#9829;</span>',
-            num: 1
-        },
-        2 : {
-            color: '<span class="redIcon">&#9829;</span>',
-            num: 2
-        },
-        3 : {
-            color: '<span class="redIcon">&#9829;</span>',
-            num: 3
-        },
-        4 : {
-            color: '<span class="redIcon">&#9829;</span>',
-            num: 4
-        },
-        5 : {
-            color: '<span class="redIcon">&#9829;</span>',
-            num: 5
-        },
-        6 : {
-            color: '<span class="redIcon">&#9829;</span>',
-            num: 6
-        },
-        7 : {
-            color: '<span class="redIcon">&#9829;</span>',
-            num: 7
-        },
-        11 : {
-            color: '<span class="redIcon">&#9830;</span>',
-            num: 1
-        },
-        12 : {
-            color: '<span class="redIcon">&#9830;</span>',
-            num: 2
-        },
-        13 : {
-            color: '<span class="redIcon">&#9830;</span>',
-            num: 3
-        },
-        14 : {
-            color: '<span class="redIcon">&#9830;</span>',
-            num: 4
-        },
-        15 : {
-            color: '<span class="redIcon">&#9830;</span>',
-            num: 5
-        },
-        16 : {
-            color: '<span class="redIcon">&#9830;</span>',
-            num: 6
-        },
-        17 : {
-            color: '<span class="redIcon">&#9830;</span>',
-            num: 7
-        },
-        21 : {
-            color: '<span class="blackIcon">&#9824;</span>',
-            num: 1
-        },
-        22 : {
-            color: '<span class="blackIcon">&#9824;</span>',
-            num: 2
-        },
-        23 : {
-            color: '<span class="blackIcon">&#9824;</span>',
-            num: 3
-        },
-        24 : {
-            color: '<span class="blackIcon">&#9824;</span>',
-            num: 4
-        },
-        25 : {
-            color: '<span class="blackIcon">&#9824;</span>',
-            num: 5
-        },
-        26 : {
-            color: '<span class="blackIcon">&#9824;</span>',
-            num: 6
-        },
-        27 : {
-            color: '<span class="blackIcon">&#9824;</span>',
-            num: 7
-        },
-        31 : {
-            color: '<span class="blackIcon">&#9827;</span>',
-            num: 1
-        },
-        32 : {
-            color: '<span class="blackIcon">&#9827;</span>',
-            num: 2
-        },
-        33 : {
-            color: '<span class="blackIcon">&#9827;</span>',
-            num: 3
-        },
-        34 : {
-            color: '<span class="blackIcon">&#9827;</span>',
-            num: 4
-        },
-        35 : {
-            color: '<span class="blackIcon">&#9827;</span>',
-            num: 5
-        },
-        36 : {
-            color: '<span class="blackIcon">&#9827;</span>',
-            num: 6
-        },
-        37 : {
-            color: '<span class="blackIcon">&#9827;</span>',
-            num: 7
-        }
+        1 : {color: '<span class="redIcon">&#9829;</span>',num: 1},
+        2 : {color: '<span class="redIcon">&#9829;</span>',num: 2},
+        3 : {color: '<span class="redIcon">&#9829;</span>',num: 3},
+        4 : {color: '<span class="redIcon">&#9829;</span>',num: 4},
+        5 : {color: '<span class="redIcon">&#9829;</span>',num: 5},
+        6 : {color: '<span class="redIcon">&#9829;</span>',num: 6},
+        7 : {color: '<span class="redIcon">&#9829;</span>',num: 7},
+		11 : {color: '<span class="redIcon">&#9830;</span>',num: 1},
+        12 : {color: '<span class="redIcon">&#9830;</span>',num: 2},
+        13 : {color: '<span class="redIcon">&#9830;</span>',num: 3},
+        14 : {color: '<span class="redIcon">&#9830;</span>',num: 4},
+        15 : {color: '<span class="redIcon">&#9830;</span>',num: 5},
+        16 : {color: '<span class="redIcon">&#9830;</span>',num: 6},
+        17 : {color: '<span class="redIcon">&#9830;</span>',num: 7},
+        21 : {color: '<span class="blackIcon">&#9824;</span>',num: 1},
+        22 : {color: '<span class="blackIcon">&#9824;</span>',num: 2},
+        23 : {color: '<span class="blackIcon">&#9824;</span>',num: 3},
+        24 : {color: '<span class="blackIcon">&#9824;</span>',num: 4},
+        25 : {color: '<span class="blackIcon">&#9824;</span>',num: 5},
+        26 : {color: '<span class="blackIcon">&#9824;</span>',num: 6},
+        27 : {color: '<span class="blackIcon">&#9824;</span>',num: 7},
+        31 : {color: '<span class="blackIcon">&#9827;</span>',num: 1},
+        32 : {color: '<span class="blackIcon">&#9827;</span>',num: 2},
+        33 : {color: '<span class="blackIcon">&#9827;</span>',num: 3},
+        34 : {color: '<span class="blackIcon">&#9827;</span>',num: 4},
+        35 : {color: '<span class="blackIcon">&#9827;</span>',num: 5},
+        36 : {color: '<span class="blackIcon">&#9827;</span>',num: 6},
+        37 : {color: '<span class="blackIcon">&#9827;</span>',num: 7}
     };
 
     //用户登录
-    $("#btn_enter").click(userlogin);
-    function userlogin() {
-        if ($('#input_nickname').val()) {
-            nickName = $('#input_nickname').val();
+	(function (){
+		if(localStorage.nickName){
+			nickName = localStorage.nickName;
+			userlogin(nickName);
+		}
+	})();
+    $("#btn_enter").click(function(){
+		if ($('#input_nickname').val()) {
+			nickName = $('#input_nickname').val();
+			userlogin(nickName);
+		}
+	});
+    function userlogin(nickName) {
             socket.emit('user login', nickName);
-        }
     }
 	socket.on('login okornot',function(data){
 		if(data){
 			$('#welcomeStage').css("display", "none");
             $('#gameStage').css("display", "block");
+			localStorage.nickName = nickName;
 		}else{ alert('用户名重复');}
 	});
 
@@ -434,15 +350,7 @@
     $('#btn_cancel').click(function() {
         dropPokers();
     });
-    //根据浏览器动态设置高度
-    //function setH() {
-    //    var w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-    //    var h = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
 
-    //	document.getElementById("gameArea").style.height = (h - 2) + "px";
-    //	document.getElementById("chatArea").style.height = (h - 152) + "px";
-    //	document.getElementById("messages").style.height = (h - 230) + "px";
-    //}
     //记录table
     $('.record').click(function(e) {
         var curIcon = $(this).html();

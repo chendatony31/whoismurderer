@@ -82,7 +82,7 @@ border-radius:5px; }
 .ui-draggable:before{content:url('../images/move.png'); position:absolute; left:-8px; top:-10px; opacity:0.3;}
 .ui-draggable:hover:before{opacity:1;}
 
-@media screen and (max-width: 760px) {
+@media screen and (max-device-width: 800px){
 	#btn_ready{ margin-left:4px; width:60px;}
 	#footerCont{ width:100%; padding:0;margin:0; border:none; height:75px;}
 	#operateArea{position: fixed; width:100%; padding:0;margin:0; border:none;
