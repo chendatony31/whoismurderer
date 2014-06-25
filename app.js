@@ -1,5 +1,5 @@
 ﻿$(document).ready(function() {
-    var socket = io.connect('http://172.18.145.54:3000'); 
+    var socket = io.connect('http://172.18.145.54:3000/game'); 
     socket.on('server is Ok',
     function() {
         console.log('连接上了');
@@ -100,6 +100,7 @@
     //接收初始牌
     socket.on('send poker',
     function(data) {
+		alert(data.poker);
         myPokers = data.poker;
         gamerNum = data.num;
         listMyPokers(myPokers);
