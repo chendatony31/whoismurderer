@@ -23,3 +23,8 @@
 然后下载本项目 放在任意web服务器(apache,iis等)下均可，
 将index.html下的 io.connect 和 script src 地址 改为自己的就可以运行了。
 
+
+
+
+
+BTW 我的主页:http://www.tony77.com/ 
