@@ -7,7 +7,7 @@
 
 项目安装
 -----------------------------------
-> 下载本项目(client 端)以及 [server端 ](http://www.google.com)
+> 下载本项目(client 端)以及 [server端 ](https://github.com/chendatony31/whoisserver)
 
 > 通过 node install 安装服务端必须的包
 
