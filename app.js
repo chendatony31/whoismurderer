@@ -10,6 +10,7 @@
     var nickName;
     var whosTurn;
     var gamerNum;
+    var roomNum;
     var myPokers = [];
     var reNum = 0;
     var dropList = [];
@@ -57,39 +58,85 @@
         37 : {color: '<span class="blackIcon">&#9827;</span>',num: 7}
     };
 
-    //用户登录
-	(function (){
+    //用户登录 start 
+	/* 
+    //localstorage
+    (function (){
 		if(localStorage.nickName){
 			nickName = localStorage.nickName;
 			userlogin(nickName);
 		}
 	})();
-    $("#btn_enter").click(function(){
+    */
+    $("#btn_checkNickName").click(function(){
 		if ($('#input_nickname').val()) {
 			nickName = $('#input_nickname').val();
 			userlogin(nickName);
 		}
 	});
+    $("#btn_loginThisRoom").click(function(){
+        roomNum = $('#input_roomnum').val();
+        if (!isNaN(roomNum) && roomNum != "") {
+            socket.emit('user loginRoom', [roomNum,nickName]);        
+        }else{
+            alert('房间号填数字');
+        }
+    });
+    $("#btn_createNewRoom").click(function(){
+        socket.emit('create new room',nickName);
+    });
+
+
     function userlogin(nickName) {
-            socket.emit('user login', nickName);
+            socket.emit('check nickName', nickName);
     }
+
 	socket.on('login okornot',function(data){
 		if(data){
-			$('#welcomeStage').css("display", "none");
-            $('#gameStage').css("display", "block");
-			localStorage.nickName = nickName;
+            $('#nickNameLogin').css("display", "none");
+            $('#roomNumLogin').css("display", "block");
+			
+			//localStorage.nickName = nickName;
 		}else{ alert('用户名重复');}
 	});
 
-    //监听用户登录登出
-    socket.on('note user login',
+
+    //用户登录进来了
+    socket.on('user inRoom',function(data){
+        alert(data[0] + ',' + data[1]); 
+        $('#welcomeStage').css("display", "none");
+        $('#gameStage').css("display", "block");
+        $('#userList').html('');
+        var userlist = data[1];
+        roomNum = data[0]
+        gameOver();
+        for (i = 0; i < data[1].length; i++) {
+            $('#userList').append($('<li>').text(data[1][i]));
+        }
+        $('#userNum').html(data[1].length);
+    });
+    socket.on('not this room',function(){
+        alert('没有这个房间号哦~你可以点击创建房间创建一个新的房间');
+    });
+
+
+    //监听用户登出
+    socket.on('note user loginout',
     function(userList) {
         $('#userList').html('');
 		gameOver();
-        for (i = 0; i < userList.users.length; i++) {
-            $('#userList').append($('<li>').text(userList.users[i]));
+        for (i = 0; i < userList.length; i++) {
+            $('#userList').append($('<li>').text(userList[i]));
         }
-		$('#userNum').html(userList.users.length);
+		$('#userNum').html(userList.length);
+    });
+    //准备按钮点击
+    $('#btn_ready').click(function() {
+
+        $('#gameMessageArea').html('');
+        $('.record').html('');
+        socket.emit('im ready');
+        $('#btn_ready').css('display', 'none');
     });
 
     socket.on('test',
@@ -132,6 +179,7 @@
     //监听游戏轮到谁了
     socket.on('whos turn',
     function(who) {
+        alert(who);
         if (who == nickName) {
             $('#selectArea').css('display', 'block');
             $('#guessArea').css('display', 'block');
@@ -325,14 +373,7 @@
         $('#gameMessageArea').prepend($('<p>').html(data.who + '扔了' + pokerString));
     });
 
-    //准备按钮点击
-    $('#btn_ready').click(function() {
-
-        $('#gameMessageArea').html('');
-        $('.record').html('');
-        socket.emit('im ready');
-        $('#btn_ready').css('display', 'none');
-    });
+    
     //监听游戏结束
     socket.on('game over',
     function() {

@@ -8,7 +8,9 @@
             谁是凶手
         </title>
         <link href="css/main.css" rel="stylesheet" />
-        <link href="lib/jquery-ui-1.10.4.custom.css" rel="stylesheet" />
+        <link href="lib/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+        <meta name="description" content="谁是凶手的官方网站,微信游戏谁是凶手,html5版谁是凶手,谁是凶手v1.0,欢迎大家提供反馈意见" />
+        <meta name="keywords" content="谁是凶手,谁是凶手在线版,谁是凶手游戏,谁是凶手手机版" />
     </head>
     
     <body>
@@ -22,14 +24,20 @@
             <h1>
                 谁是凶手
             </h1>
-            <p>
-                找出谁是凶手！
-            </p>
-            <input type="text" id="input_nickname" maxlength="14" autofocus="autofocus"
-            placeholder="输入你的昵称" />
-            <button id="btn_enter">
+            <div id="nickNameLogin">
+            昵　称：<input type="text" id="input_nickname" maxlength="14" autofocus="autofocus"
+            placeholder="输入你的昵称" /><br />
+             
+            <button id="btn_checkNickName" class="btn_login">
                 进入
             </button>
+            </div>
+            <div id="roomNumLogin">
+
+                房间号：<input id="input_roomnum" type="number" min="0" max="100"　placeholder="0-100" /><br>
+                <button id="btn_loginThisRoom" class="btn_login">加入这个房间</button>
+                <button id="btn_createNewRoom" class="btn_login">新建一个房间</button>
+             </div>
         </div>
         <div id="gameStage">
             
