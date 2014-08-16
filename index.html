@@ -1,9 +1,11 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
     
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width,user-scalable=no" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width,user-scalable=no" />
+        <link rel="shortcut icon" href="http://www.tony77.com/wp-content/uploads/2012/12/favicon.png" type="image/x-icon" />
         <title>
             谁是凶手
         </title>
@@ -15,10 +17,10 @@
     
     <body>
         <div id="loading">
-			<div id="loadingImg">
-				<div class="circle"></div>
-				<div class="circle1"></div>
-			</div>
+            <div id="loadingImg">
+                <div class="circle"></div>
+                <div class="circle1"></div>
+            </div>
         </div>
         <div id="welcomeStage">
             <h1>
@@ -31,6 +33,11 @@
             <button id="btn_checkNickName" class="btn_login">
                 进入
             </button>
+            <p>玩法：28张牌，4种花色，1到7,全部玩家(可2-6人)都点击准备后，游戏开始<br>
+            系统分给每人若干张手牌，再从剩下的牌堆里取一张为‘凶手’剩余牌亮出 <br>
+            然后以 要牌(某个花色) -> 出牌 -> 下一人要牌的顺序进行，直到猜出凶手是谁(哪张牌)<br>
+            出牌阶段如果有3张同样数字的或3张同色连顺，必须要出3张</p>
+            
             </div>
             <div id="roomNumLogin">
 
@@ -41,8 +48,8 @@
         </div>
         <div id="gameStage">
             
-			<!--
-			<div id="gameArea">
+            <!--
+            <div id="gameArea">
             </div>
             <div id="chatArea" class="panels">
                 <h2 class="ui-widget-header">
@@ -55,7 +62,7 @@
                     <input id="btnSend" type="button" value="发送" />
                 </div>
             </div>
-			-->
+            -->
             <div id="mainCont">
                 <div id="msgCont" class="panels">
                     <h2 class="ui-widget-header">
@@ -64,17 +71,18 @@
                     <div id="gameMessageArea">
                     </div>
                 </div>
-				
+                
                 <div id="userListCont" class="panels">
                     <h2 class="ui-widget-header">
                         玩家列表
                     </h2>
-					
+                    
                     <ul id="userList">
                     </ul>
-					
+                    
                 </div>
-				<div id="userNumCont">玩家数量:<span id="userNum"></span></div>
+                <div id="userNumCont">玩家:<span id="userNum"></span></div>
+                <div id="roomNumCont">房间:<span id="roomNum"></span></div>
                 <div id="infoArea" class="panels">
                     <h2 class="ui-widget-header">
                         记录板
@@ -147,77 +155,77 @@
                 </div>
             </div>
             
-			<div id="footerCont">
-				
-				<div id="operateArea">
-					<h2 class="ui-widget-header">
-						操作区
-					</h2>
-					<!-- 猜测区 -->
-					<div id="guessArea">
-						<select id="guessColor" name="color">
-							<option class="redIcon" value="heart">
-								&#9829;
-							</option>
-							<option class="redIcon" value="diamond">
-								&#9830;
-							</option>
-							<option class="blackIcon" value="spade">
-								&#9824;
-							</option>
-							<option class="blackIcon" value="club">
-								&#9827;
-							</option>
-						</select><select id="guessNum" name="num">
-							<option value="1">
-								1
-							</option>
-							<option value="2">
-								2
-							</option>
-							<option value="3">
-								3
-							</option>
-							<option value="4">
-								4
-							</option>
-							<option value="5">
-								5
-							</option>
-							<option value="6">
-								6
-							</option>
-							<option value="7">
-								7
-							</option>
-						
-						</select><input type="button" class="btn_op" id="btn_guess" title="猜错就输了~ 请慎重" value="猜"
-						/>
-					</div>
-					<!-- 准备开始按钮 -->
-					<input id="btn_ready" class="btn_op" type="button" value="准备" />
-					<!-- 要牌 -->
-					<div id="selectArea">
-						要
-						<input id="heart" type="button" value="&#9829;" 
-						/><input id="diamond" type="button" value="&#9830;" 
-						/><input id="spade" type="button" value="&#9824;" 
-						/><input id="club" type="button" value="&#9827;" />
-					</div>
-					<div id="dropArea">
-						
-							<p class="tips">TIPs: 选择要出的牌 点击‘确认出牌’</p>
-							<input id="btn_drop" class="btn_op" type="button" value="确认出牌" 
-							/><input id="btn_cancel" class="btn_op" type="button" value="重新选择" />
-						
-					</div>
-				</div>
-				<div id="pokerArea">
-					<ul id="pokerList">
-					</ul>
-				</div>
-			</div>
-		</div>
+            <div id="footerCont">
+                
+                <div id="operateArea">
+                    <h2 class="ui-widget-header">
+                        操作区
+                    </h2>
+                    <!-- 猜测区 -->
+                    <div id="guessArea">
+                        <select id="guessColor" name="color">
+                            <option class="redIcon" value="heart">
+                                &#9829;
+                            </option>
+                            <option class="redIcon" value="diamond">
+                                &#9830;
+                            </option>
+                            <option class="blackIcon" value="spade">
+                                &#9824;
+                            </option>
+                            <option class="blackIcon" value="club">
+                                &#9827;
+                            </option>
+                        </select><select id="guessNum" name="num">
+                            <option value="1">
+                                1
+                            </option>
+                            <option value="2">
+                                2
+                            </option>
+                            <option value="3">
+                                3
+                            </option>
+                            <option value="4">
+                                4
+                            </option>
+                            <option value="5">
+                                5
+                            </option>
+                            <option value="6">
+                                6
+                            </option>
+                            <option value="7">
+                                7
+                            </option>
+                        
+                        </select><input type="button" class="btn_op" id="btn_guess" title="猜错就输了~ 请慎重" value="猜"
+                        />
+                    </div>
+                    <!-- 准备开始按钮 -->
+                    <input id="btn_ready" class="btn_op" type="button" value="准备" />
+                    <!-- 要牌 -->
+                    <div id="selectArea">
+                        要
+                        <input id="heart" type="button" value="&#9829;" 
+                        /><input id="diamond" type="button" value="&#9830;" 
+                        /><input id="spade" type="button" value="&#9824;" 
+                        /><input id="club" type="button" value="&#9827;" />
+                    </div>
+                    <div id="dropArea">
+                        
+                            <p class="tips">TIPs: 选择要出的牌 点击‘确认出牌’</p>
+                            <input id="btn_drop" class="btn_op" type="button" value="确认出牌" 
+                            /><input id="btn_cancel" class="btn_op" type="button" value="重新选择" />
+                        
+                    </div>
+                </div>
+                <div id="pokerArea">
+                    <ul id="pokerList">
+                    </ul>
+                </div>
+            </div>
+        </div>
         <script src="lib/jquery-1.10.2.js">
         </script>
         <script src="lib/jquery-ui-1.10.4.custom.min.js">
@@ -225,6 +233,77 @@
         <script src="lib/socket.io.js">
         </script>
         <script src="app.js">
+        </script>
+        <script>
+    // 微信分享到朋友圈的内容和图片的定制
+            (function () {
+             
+                // data for weixin
+                var dataForWeixin = {
+                    imgUrl:"http://www.tony77.com/whois/whois.jpg", 
+                    imgWidth: "200",
+                    imgHeight: "200",
+                    url: "http://www.tony77.com/whois/index.html",
+                    title:"谁是凶手，2-6人的聚会推理游戏",
+                    desc:"谁是凶手，2-6人聚会推理游戏，叫你的小伙伴一起玩吧",
+                    callback: function () {}
+                };
+             
+                var onBridgeReady = function () {
+             
+                    // 发送给朋友
+                    WeixinJSBridge.on("menu:share:appmessage", function (argv) {
+                        WeixinJSBridge.invoke("sendAppMessage", {
+                            "img_url": dataForWeixin.imgUrl,
+                            "img_width": dataForWeixin.imgWidth,
+                            "img_height": dataForWeixin.imgHeight,
+                            "link": dataForWeixin.url,
+                            "desc": dataForWeixin.desc,
+                            "title": dataForWeixin.title
+                        }, function (res) { dataForWeixin.callback(); });
+                    });
+             
+                    // 发送到朋友圈
+                    WeixinJSBridge.on("menu:share:timeline", function (argv) {
+                        WeixinJSBridge.invoke("shareTimeline", {
+                            "appid": dataForWeixin.appId,
+                            "img_url": dataForWeixin.imgUrl,
+                            "img_width": dataForWeixin.imgWidth,
+                            "img_height": dataForWeixin.imgHeight,
+                            "link": dataForWeixin.url,
+                            "desc": dataForWeixin.desc,
+                            "title": dataForWeixin.title
+                        }, function (res) { dataForWeixin.callback(); });
+                    });
+             
+                    // 分享到微博
+                    WeixinJSBridge.on("menu:share:weibo", function (argv) {
+                        WeixinJSBridge.invoke("shareWeibo", {
+                            "content": dataForWeixin.title,
+                            "url": dataForWeixin.url
+                        }, function (res) { dataForWeixin.callback(); });
+                    });
+             
+                    // 分享到facebook
+                    WeixinJSBridge.on("menu:share:facebook", function (argv) {
+                        WeixinJSBridge.invoke("shareFB", {
+                            "img_url": dataForWeixin.imgUrl,
+                            "img_width": dataForWeixin.imgWidth,
+                            "img_height": dataForWeixin.imgHeight,
+                            "link": dataForWeixin.url,
+                            "desc": dataForWeixin.desc,
+                            "title": dataForWeixin.title
+                        }, function (res) { dataForWeixin.callback(); });
+                    });
+                };
+             
+                if (document.addEventListener) {
+                    document.addEventListener("WeixinJSBridgeReady", onBridgeReady, false);
+                } else if (document.attachEvent) {
+                    document.attachEvent("onWeixinJSBridgeReady", onBridgeReady);
+                }
+            })();
+
         </script>
     </body>
 

@@ -1,12 +1,12 @@
 ﻿$(document).ready(function() {
-    var socket = io.connect('http://172.18.145.54:3000/game'); 
+    var socket = io.connect('http://42.202.146.184:3000/game'); 
     socket.on('server is Ok',
     function() {
         console.log('连接上了');
         $('#loading').css("display", "none");
         $('#welcomeStage').css("display", "block");
     });
-	
+    
     var nickName;
     var whosTurn;
     var gamerNum;
@@ -35,7 +35,7 @@
         5 : {color: '<span class="redIcon">&#9829;</span>',num: 5},
         6 : {color: '<span class="redIcon">&#9829;</span>',num: 6},
         7 : {color: '<span class="redIcon">&#9829;</span>',num: 7},
-		11 : {color: '<span class="redIcon">&#9830;</span>',num: 1},
+        11 : {color: '<span class="redIcon">&#9830;</span>',num: 1},
         12 : {color: '<span class="redIcon">&#9830;</span>',num: 2},
         13 : {color: '<span class="redIcon">&#9830;</span>',num: 3},
         14 : {color: '<span class="redIcon">&#9830;</span>',num: 4},
@@ -59,21 +59,21 @@
     };
 
     //用户登录 start 
-	/* 
+    /* 
     //localstorage
     (function (){
-		if(localStorage.nickName){
-			nickName = localStorage.nickName;
-			userlogin(nickName);
-		}
-	})();
+        if(localStorage.nickName){
+            nickName = localStorage.nickName;
+            userlogin(nickName);
+        }
+    })();
     */
     $("#btn_checkNickName").click(function(){
-		if ($('#input_nickname').val()) {
-			nickName = $('#input_nickname').val();
-			userlogin(nickName);
-		}
-	});
+        if ($('#input_nickname').val()) {
+            nickName = $('#input_nickname').val();
+            userlogin(nickName);
+        }
+    });
     $("#btn_loginThisRoom").click(function(){
         roomNum = $('#input_roomnum').val();
         if (!isNaN(roomNum) && roomNum != "") {
@@ -91,29 +91,30 @@
             socket.emit('check nickName', nickName);
     }
 
-	socket.on('login okornot',function(data){
-		if(data){
+    socket.on('login okornot',function(data){
+        if(data){
             $('#nickNameLogin').css("display", "none");
             $('#roomNumLogin').css("display", "block");
-			
-			//localStorage.nickName = nickName;
-		}else{ alert('用户名重复');}
-	});
+            
+            //localStorage.nickName = nickName;
+        }else{ alert('用户名重复');}
+    });
 
 
     //用户登录进来了
     socket.on('user inRoom',function(data){
-        alert(data[0] + ',' + data[1]); 
+        //alert(data[0] + ',' + data[1]); 
         $('#welcomeStage').css("display", "none");
         $('#gameStage').css("display", "block");
         $('#userList').html('');
         var userlist = data[1];
-        roomNum = data[0]
+        roomNum = data[0];
         gameOver();
         for (i = 0; i < data[1].length; i++) {
             $('#userList').append($('<li>').text(data[1][i]));
         }
         $('#userNum').html(data[1].length);
+        $('#roomNum').html(roomNum);
     });
     socket.on('not this room',function(){
         alert('没有这个房间号哦~你可以点击创建房间创建一个新的房间');
@@ -124,11 +125,11 @@
     socket.on('note user loginout',
     function(userList) {
         $('#userList').html('');
-		gameOver();
+        gameOver();
         for (i = 0; i < userList.length; i++) {
             $('#userList').append($('<li>').text(userList[i]));
         }
-		$('#userNum').html(userList.length);
+        $('#userNum').html(userList.length);
     });
     //准备按钮点击
     $('#btn_ready').click(function() {
@@ -147,7 +148,7 @@
     //接收初始牌
     socket.on('send poker',
     function(data) {
-		alert(data.poker);
+        //alert(data.poker);
         myPokers = data.poker;
         gamerNum = data.num;
         listMyPokers(myPokers);
@@ -179,7 +180,7 @@
     //监听游戏轮到谁了
     socket.on('whos turn',
     function(who) {
-        alert(who);
+        //alert(who);
         if (who == nickName) {
             $('#selectArea').css('display', 'block');
             $('#guessArea').css('display', 'block');
@@ -208,15 +209,15 @@
                 isHaveColor = true;
                 var pid = "#p" + myPokers[i];
                 $(pid).addClass('drapablePoker').click(function(e) {
-					if(e.target.tagName == 'LI'){
-						var deliveredId = e.target.id.substring(1);
-						socket.emit('delivered poker', {
-							who: nickName,
-							poker: deliveredId
-						});
-						$('#gameMessageArea').prepend($('<p>').html('你给了' + whosTurn + _POKERS[deliveredId].color + _POKERS[deliveredId].num));
-						delPoker(deliveredId);
-					}
+                    if(e.target.tagName == 'LI'){
+                        var deliveredId = e.target.id.substring(1);
+                        socket.emit('delivered poker', {
+                            who: nickName,
+                            poker: deliveredId
+                        });
+                        $('#gameMessageArea').prepend($('<p>').html('你给了' + whosTurn + _POKERS[deliveredId].color + _POKERS[deliveredId].num));
+                        delPoker(deliveredId);
+                    }
                 });
             }
         }
@@ -252,7 +253,7 @@
         dropNum = 0;
         dropList = [];
         $('#dropArea').css('display', 'block');
-		$('#btn_cancel').css('display','none');
+        $('#btn_cancel').css('display','none');
         for (var i = 0; i < myPokers.length; i++) {
             var pid = "#p" + myPokers[i];
             $(pid).removeClass('drapablePoker');
@@ -260,7 +261,7 @@
             $(pid).bind("click",
             function(e) {
                 $(e.target).addClass('drapablePoker');
-				$('#btn_cancel').css('display','inline');
+                $('#btn_cancel').css('display','inline');
                 dropNum++;
                 var dropId = e.target.id.substring(1);
                 dropList.push(dropId);
@@ -305,16 +306,16 @@
     });
     //guess!
     $('#btn_guess').click(function() {
-		var g = confirm('猜错就输了哦~确定要猜么？');
-		if(g == true){
-			var color = $('#guessColor').val();
-			var num = $('#guessNum').val();
-			var id = (_COLOR[color] + num) * 1;
-			socket.emit('guess', {
-				pokerid: id,
-				who: nickName
-			});
-		}else{ return false}
+        var g = confirm('猜错就输了哦~确定要猜么？');
+        if(g == true){
+            var color = $('#guessColor').val();
+            var num = $('#guessNum').val();
+            var id = (_COLOR[color] + num) * 1;
+            socket.emit('guess', {
+                pokerid: id,
+                who: nickName
+            });
+        }else{ return false}
     });
     //猜测结果
     socket.on('bingo',
@@ -330,7 +331,7 @@
             gameOver();
         }
     });
-	//猜错了
+    //猜错了
     socket.on('guess failed',
     function(data) {
         if (data.who == nickName) {
@@ -415,13 +416,13 @@
     function formatPoker(id) {
         return _POKERS[id].color + _POKERS[id].num
     }
-	 //监听showmessage
-	 
+     //监听showmessage
+     
     /*socket.on('show message',
     function(data) {
         $('#messages').prepend($('<li>').text(data.who + ":" + data.msg));
     });
-	function send_message() {
+    function send_message() {
         if ($('#input_msg').val()) {
             socket.emit('send message', {
                 msg: $('#input_msg').val(),
