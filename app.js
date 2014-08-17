@@ -96,6 +96,10 @@
         }
     });
 
+    socket.on('gaming',function(){
+        alert('这个房间游戏正在进行中。。。')
+    })
+
     //创建新房间
     $("#btn_createNewRoom").click(function(){
         socket.emit('create new room');
