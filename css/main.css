@@ -14,6 +14,7 @@ h2{font-size:16px; text-align:center; margin:8px;}
 #welcomeStage{ position:absolute; width:100%; height:100%; display:none;
 	background:url('../images/bg_loading.jpg'); text-align:center; color:#ddd;}
 #welcomeStage *{ margin-top:50px; color:#ddd; }
+#welcomeStage p { margin-top: 20px;}
 #input_nickname{ width:200px; height:40px; background:transparent; border:none; outline:none;
 	border-bottom:1px solid #ddd; font-size:20px; color:#fff; padding-left:8px;}
 #input_roomnum{width:200px; height:40px; background:transparent; border:none; outline:none;
@@ -22,7 +23,7 @@ h2{font-size:16px; text-align:center; margin:8px;}
 
 #gameStage{ width:100%; display:none;}
 #gameArea{ width:100%;position:fixed; left:0; border:none;}
-#roomNumLogin{ display: none;}
+#nickNameLogin{ display: none;}
 
 
 /* 涓昏鍖哄煙 鐢ㄦ埛鍒楄〃 淇℃伅鍒楄〃 璁板綍鏉� */

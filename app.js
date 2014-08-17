@@ -1,16 +1,19 @@
 ﻿$(document).ready(function() {
     var socket = io.connect('http://42.202.146.184:3000/game'); 
     socket.on('server is Ok',
-    function() {
+    function(data) {
         console.log('连接上了');
         $('#loading').css("display", "none");
         $('#welcomeStage').css("display", "block");
+        $('#totalVisit').html(data[0]);
+        $('#onlineNum').html(data[1]);
     });
     
     var nickName;
     var whosTurn;
     var gamerNum;
     var roomNum;
+    var roomUserNum;
     var myPokers = [];
     var reNum = 0;
     var dropList = [];
@@ -70,38 +73,47 @@
         }
     })();
     */
+
+    //点击进入游戏按钮
     $("#btn_checkNickName").click(function(){
         if ($('#input_nickname').val()) {
             nickName = $('#input_nickname').val();
             userlogin(nickName);
         }
     });
-    $("#btn_loginThisRoom").click(function(){
-        roomNum = $('#input_roomnum').val();
-        if (!isNaN(roomNum) && roomNum != "") {
-            socket.emit('user loginRoom', [roomNum,nickName]);        
-        }else{
-            alert('房间号填数字');
-        }
-    });
-    $("#btn_createNewRoom").click(function(){
-        socket.emit('create new room',nickName);
-    });
-
 
     function userlogin(nickName) {
             socket.emit('check nickName', nickName);
     }
 
-    socket.on('login okornot',function(data){
-        if(data){
-            $('#nickNameLogin').css("display", "none");
-            $('#roomNumLogin').css("display", "block");
-            
-            //localStorage.nickName = nickName;
-        }else{ alert('用户名重复');}
+    //加入指定房间
+    $("#btn_loginThisRoom").click(function(){
+        roomNum = $('#input_roomnum').val();
+        if (!isNaN(roomNum) && roomNum != "") {
+            socket.emit('user loginRoom', roomNum);        
+        }else{
+            alert('房间号填数字');
+        }
     });
 
+    //创建新房间
+    $("#btn_createNewRoom").click(function(){
+        socket.emit('create new room');
+    });
+
+
+    socket.on('nickName not ok',function(){
+        alert('用户名重复');
+    });
+
+
+    socket.on('in the room',function(data){
+        roomNum = data;
+        dataForWeixin.title = "谁是凶手，我的房间号是" + roomNum +",速度来！在线等"
+        $('#roomNumLogin').css("display", "none");
+        $('#nickNameLogin').css("display", "block");
+        
+    })
 
     //用户登录进来了
     socket.on('user inRoom',function(data){
@@ -110,6 +122,7 @@
         $('#gameStage').css("display", "block");
         $('#userList').html('');
         var userlist = data[1];
+        roomUserNum = userlist.length;
         roomNum = data[0];
         gameOver();
         for (i = 0; i < data[1].length; i++) {
@@ -117,6 +130,9 @@
         }
         $('#userNum').html(data[1].length);
         $('#roomNum').html(roomNum);
+        if(roomUserNum == 1){
+            alert('你的房间号是'+ roomNum + ",赶紧通过微信叫好友一起来玩吧");
+        }
     });
     socket.on('not this room',function(){
         alert('没有这个房间号哦~你可以点击创建房间创建一个新的房间');
@@ -135,11 +151,14 @@
     });
     //准备按钮点击
     $('#btn_ready').click(function() {
-
-        $('#gameMessageArea').html('');
-        $('.record').html('');
-        socket.emit('im ready');
-        $('#btn_ready').css('display', 'none');
+        if(roomUserNum == 1){
+            alert('目前房间里只有你一个人哦，赶紧去叫你的小伙伴们吧,你的房间号是：' + roomNum);
+        }else{
+            $('#gameMessageArea').html('');
+            $('.record').html('');
+            socket.emit('im ready');
+            $('#btn_ready').css('display', 'none');
+        }
     });
 
     socket.on('test',
