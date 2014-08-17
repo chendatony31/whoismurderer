@@ -15,6 +15,7 @@
     var reNum = 0;
     var dropList = [];
     var dropNum;
+    var hasTripleCards = false;
     var _POKERCOLOR = {
         heart: '<span class="redIcon">&#9829;</span>',
         diamond: '<span class="redIcon">&#9830;</span>',
@@ -250,8 +251,10 @@
     });
     //扔牌
     function dropPokers() {
+        hasTripleCards = false;
         dropNum = 0;
         dropList = [];
+        detectTripleCards();
         $('#dropArea').css('display', 'block');
         $('#btn_cancel').css('display','none');
         for (var i = 0; i < myPokers.length; i++) {
@@ -268,6 +271,18 @@
                 $(e.target).unbind();
             });
         }
+    }
+
+    //检测有没有三张的
+    function detectTripleCards(){
+        for(i=0;i<myPokers.length-2;i++){
+            if(myPokers[i+1]-myPokers[i]==1 && myPokers[i+2]-myPokers[i+1]==1){
+                hasTripleCards = true;
+                alert("有三张相连的哦");
+                break;
+            }
+        }
+
     }
     //删除牌
     function delPoker(id) {
