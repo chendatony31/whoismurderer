@@ -16,6 +16,7 @@
     var dropList = [];
     var dropNum;
     var hasTripleCards = false;
+    var hasCardsInRow = false;
     var _POKERCOLOR = {
         heart: '<span class="redIcon">&#9829;</span>',
         diamond: '<span class="redIcon">&#9830;</span>',
@@ -251,6 +252,7 @@
     });
     //扔牌
     function dropPokers() {
+        hasCardsInRow = false;
         hasTripleCards = false;
         dropNum = 0;
         dropList = [];
@@ -277,9 +279,18 @@
     function detectTripleCards(){
         for(i=0;i<myPokers.length-2;i++){
             if(myPokers[i+1]-myPokers[i]==1 && myPokers[i+2]-myPokers[i+1]==1){
-                hasTripleCards = true;
-                alert("有三张相连的哦");
+                hasCardsInRow = true;
                 break;
+            }
+        }
+        for(i=0;i<myPokers.length;i++){
+            var count = 0;
+            if(myPokers[i]>20){ break;}
+            for(j=i+1;j<myPokers.length;j++){
+                if(myPokers[i]%10 == myPokers[j]%10){ count++;}
+            }
+            if(count >= 2){
+                hasTripleCards = true;
             }
         }
 
@@ -296,29 +307,55 @@
     }
     //点击出牌按钮
     $('#btn_drop').click(function() {
-        if (dropList.length == 3) {
-            socket.emit('drop firstPoker', dropList[0]);
-            socket.emit('drop otherPoker', dropList);
-            for (var i = 0; i < 3; i++) {
-                delPoker(dropList[i]);
-            }
-            listMyPokers(myPokers);
-            dropList = [];
-            $('#dropArea').css('display', 'none');
-            $('#guessArea').css('display', 'none');
-        } else if (dropList.length == 1) {
-            socket.emit('drop onePoker', dropList[0]);
-            delPoker(dropList[0]);
-            listMyPokers(myPokers);
-            dropList = [];
-            $('#dropArea').css('display', 'none');
-            $('#guessArea').css('display', 'none');
-        } else {
-            alert('扔牌数量不对');
-            dropPokers();
+        switch(dropList.length){
+            case 1:
+                if(hasCardsInRow && hasTripleCards){
+                    alert("你有三张相连的也有三张相同数字的牌，请出3张");
+                }else if(hasCardsInRow){
+                    alert("你有三张相连的牌，请出3张");
+                }else if(hasTripleCards){
+                    alert("你有三张相同数字的牌，请出3张");
+                }else{
+                    socket.emit('drop onePoker', dropList[0]);
+                    delPoker(dropList[0]);
+                    listMyPokers(myPokers);
+                    dropList = [];
+                    $('#dropArea').css('display', 'none');
+                    $('#guessArea').css('display', 'none');
+                }
+                break;
+            case 3:
+                if(isThreeOk(dropList)){
+                    socket.emit('drop firstPoker', dropList[0]);
+                    socket.emit('drop otherPoker', dropList);
+                    for (var i = 0; i < 3; i++) {
+                        delPoker(dropList[i]);
+                    }
+                    listMyPokers(myPokers);
+                    dropList = [];
+                    $('#dropArea').css('display', 'none');
+                    $('#guessArea').css('display', 'none');
+                }else{
+                    alert('这三张牌不符合3张相连或者3张相同数字');
+                }
+                break;
+            default:
+                alert('扔牌数量不对');
+                break;
         }
-
     });
+    function isThreeOk(pokerList){
+        pokerList.sort(sortNumber);
+        if(pokerList[2]-pokerList[1]==1 && pokerList[1]-pokerList[0]==1){
+            return true;
+        }else if(pokerList[0]%10 == pokerList[1]%10 && pokerList[1]%10 == pokerList[2]%10){
+            return true;
+        }else{ return false;}
+    }
+    function sortNumber(a,b)
+    {
+        return a - b
+    }
     //guess!
     $('#btn_guess').click(function() {
         var g = confirm('猜错就输了哦~确定要猜么？');
