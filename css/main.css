@@ -7,7 +7,7 @@ h2{font-size:16px; text-align:center; margin:8px;}
 .panels{background:#bbb; box-shadow:0 5px 5px #000}
 #btn_ready{ position:absolute;}
 #btn_guess{ width:40px;}
-/* 鍏ュ彛  */
+/* 入口  */
 
 #loading { position:absolute; width:100%; height:100%; background:url('../images/bg_loading.gif');}
 #loadingImg{position:absolute; margin:auto; top:0; bottom:0; left:0; right:0; width:90px; height:90px;}
@@ -26,7 +26,7 @@ h2{font-size:16px; text-align:center; margin:8px;}
 #nickNameLogin{ display: none;}
 
 
-/* 涓昏鍖哄煙 鐢ㄦ埛鍒楄〃 淇℃伅鍒楄〃 璁板綍鏉� */
+/* 主要区域 用户列表 信息列表 记录 */
 #mainCont{ position:relative; width:960px; height:auto; margin:0 auto;}
 
 #userListCont{ width:150px;  position:absolute; height:200px; padding:4px; top:20px; left:10px; border:1px solid #666; }
@@ -48,11 +48,11 @@ h2{font-size:16px; text-align:center; margin:8px;}
 .btn_op{ height:30px; margin-left:8px;}
 
 
-/* 搴曢儴鍖哄煙*/
+/* 底部区域*/
 
 #footerCont{ position:fixed;left:0;right:0;margin:auto;bottom:0; width:960px; height:150px; background:#333; padding:5px; }
 
-/* 鍚勭鎿嶄綔鍖� 鍜� 鎵戝厠鍖�*/ 
+/* 各种操作区  扑克*/ 
 #btn_start{ width:110px; height:30px; }
 #dropArea{position:absolute; left:12px; display:none;}
 
@@ -72,7 +72,7 @@ border-radius:5px; }
 #pokerList li:first-child{margin-left:4px; }
 .drapablePoker{ background:#6bc !important;  top:-10px; cursor:pointer;}
 
-/* 鑱婂ぉ鍖�*/
+/* 聊天区*/
 #chatArea{width:200px; height:500px; position:fixed; top:20px; right:0;border:1px solid #666;
 	 padding:4px;}
 #messages{ width:100%; height:422px; overflow:auto; }
