@@ -58,6 +58,8 @@ h2{font-size:16px; text-align:center; margin:8px;}
 
 #selectArea {position:absolute; left: 12px; display:none;}
 #selectArea input { width:60px; height:30px; font-size:22px;}
+#passbyArea {position:absolute; left: 12px; display:none;}
+passbyArea input {height:30px;}
 #guessArea{position:absolute;  right:12px;  bottom:8px ; display:none; }
 #guessArea input { height:30px; font-size:13px;}
 #guessColor { font-size:18px; height:30px; vertical-align:middle; } 
@@ -72,16 +74,7 @@ border-radius:5px; }
 #pokerList li:first-child{margin-left:4px; }
 .drapablePoker{ background:#6bc !important;  top:-10px; cursor:pointer;}
 
-/* 聊天区*/
-#chatArea{width:200px; height:500px; position:fixed; top:20px; right:0;border:1px solid #666;
-	 padding:4px;}
-#messages{ width:100%; height:422px; overflow:auto; }
-#messages li{ padding:8px 16px;}
-#messages li:nth-child(even) {background: #eee}
-#messages li:nth-child(odd) {background: #FFF}
-#chatForm{ position:relative; bottom:0; width:200px; background:#333;}
-#input_msg{ width:80%; border:0; height:32px; margin:2px .5%; vertical-align:middle;}
-#btnSend { width:18%; border:0;height:32px; margin:2px .5%;vertical-align:middle;}
+
 
 .ui-draggable:before{content:url('../images/move.png'); position:absolute; left:-8px; top:-10px; opacity:0.3;}
 .ui-draggable:hover:before{opacity:1;}
@@ -122,6 +115,10 @@ border-radius:5px; }
 	#selectArea input{height:32px; font-size:16px; margin:0;width:32px;}
 	#pokerList li {height:41px; width:30px; padding:16px 0 0 2px; margin:2px 0 0 -10px;}
 	#pokerList li span {position:absolute; top:0;}
+	.shortone{ height:20px !important; width:30px !important; padding: 14px 0 0 2px !important; margin: 1px 0 !important;}
+	.shortone.darkpoker{ margin-left: -4px !important;}
+	.shortone.darkpoker span{ font-size: 14px; line-height: 100%;}
+	#pokerList .shortone:first-child{ margin: 0 !important;}
 	#guessArea input { height:32px; font-size:13px;}
 	#selectArea{left:4px;}
 	#guessArea{position:absolute;  right:4px;  bottom:auto; }

@@ -3,8 +3,8 @@
     socket.on('server is Ok',
     function(data) {
         console.log('连接上了');
-        $('#loading').css("display", "none");
-        $('#welcomeStage').css("display", "block");
+        $('#loading').hide(300);
+        $('#welcomeStage').show(300);
         $('#totalVisit').html(data[0]);
         $('#onlineNum').html(data[1]);
     });
@@ -114,16 +114,16 @@
     socket.on('in the room',function(data){
         roomNum = data;
         dataForWeixin.title = "谁是凶手，我的房间号是" + roomNum +",速度来！在线等"
-        $('#roomNumLogin').css("display", "none");
-        $('#nickNameLogin').css("display", "block");
+        $('#roomNumLogin').hide(300);
+        $('#nickNameLogin').show(300);
         
     })
 
     //用户登录进来了
     socket.on('user inRoom',function(data){
         //alert(data[0] + ',' + data[1]); 
-        $('#welcomeStage').css("display", "none");
-        $('#gameStage').css("display", "block");
+        $('#welcomeStage').hide(300);
+        $('#gameStage').show(300);
         $('#userList').html('');
         var userlist = data[1];
         roomUserNum = userlist.length;
@@ -161,7 +161,7 @@
             $('#gameMessageArea').html('');
             $('.record').html('');
             socket.emit('im ready');
-            $('#btn_ready').css('display', 'none');
+            $('#btn_ready').hide(300);
         }
     });
 
@@ -192,9 +192,7 @@
     //将自己的手牌展示出来
     function listMyPokers(myPokers) {
         $('#pokerList').html('');
-        myPokers.sort(function(a, b) {
-            return a - b
-        });
+        myPokers.sort(sortNumber);
         for (i = 0; i < myPokers.length; i++) {
             $('#pokerList').append($('<li>').html(_POKERS[myPokers[i]].color + _POKERS[myPokers[i]].num).attr({
                 "id": 'p' + myPokers[i],
@@ -202,23 +200,68 @@
             }));
         }
     }
+    //展示底牌
+    function listDarkPokers(darklist){
+        $('#pokerList').html('');
+        for(i=0;i<darklist.length;i++){
+            if(i%3 == 0){
+                $('#pokerList').append($('<li>').html(_POKERS[darklist[i]].color + _POKERS[darklist[i]].num).attr({
+                    "id": 'p' + darklist[i],
+                    "val": darklist[i],
+                    "class" : "shortone"
+                }));
+            }else{
+                $('#pokerList').append($('<li>').html("<span>查<br>看</span>").attr({
+                    "id": 'p' + darklist[i],
+                    "val": darklist[i],
+                    "class" : "shortone darkpoker"
+                }));
+            }
+        }
+    }
+    //绑定click事件
+    $(document).on('click','.darkpoker',function(e){
+        var tmpId = e.target.id.substring(1);
+        $('#gameMessageArea').prepend($('<p>').html('这张牌是' + formatPoker(tmpId)));
+        $('#passbyArea').show(300);
+        $('#pokerList').html('');
+    });
+    $('#btn_passby').click(function(){
+        $('#passbyArea').hide(300);
+        $('guessArea').hide(300);
+        socket.emit('passed by');
+    })
+    
     //监听游戏轮到谁了
     socket.on('whos turn',
     function(who) {
         //alert(who);
         if (who == nickName) {
-            $('#selectArea').css('display', 'block');
-            $('#guessArea').css('display', 'block');
+            console.log(nickName +'还有' + myPokers.length + "张牌");
+            if(myPokers.length == 0){
+                alert('你没牌了,可以点击看一张底牌');
+                socket.emit('i have no cards');
+            }else{
+                $('#selectArea').show(300);
+            }
+             $('#guessArea').show(300);
         }
         whosTurn = who;
-        $('#gameMessageArea').prepend($('<p>').text(whosTurn + ' 开始要牌'));
+        $('#gameMessageArea').prepend($('<p>').text('轮到'+ whosTurn + '了'));
     });
+
+    //没牌了 要看底牌了
+    socket.on('here is dark cards',function(data){
+        listDarkPokers(data);
+    })
+
+
     //要牌
     $('#selectArea input').click(function(e) {
         var choice = e.target.id;
         socket.emit('user order', choice);
         reNum = 0;
-        $('#selectArea').css('display', 'none');
+        $('#selectArea').hide(300);
     });
     //监听要的什么牌
     socket.on('request poker',
@@ -280,8 +323,8 @@
         dropNum = 0;
         dropList = [];
         detectTripleCards();
-        $('#dropArea').css('display', 'block');
-        $('#btn_cancel').css('display','none');
+        $('#dropArea').show(300)
+        $('#btn_cancel').hide(300);
         for (var i = 0; i < myPokers.length; i++) {
             var pid = "#p" + myPokers[i];
             $(pid).removeClass('drapablePoker');
@@ -343,8 +386,8 @@
                     delPoker(dropList[0]);
                     listMyPokers(myPokers);
                     dropList = [];
-                    $('#dropArea').css('display', 'none');
-                    $('#guessArea').css('display', 'none');
+                    $('#dropArea').hide(300);
+                    $('#guessArea').hide(300);
                 }
                 break;
             case 3:
@@ -356,8 +399,8 @@
                     }
                     listMyPokers(myPokers);
                     dropList = [];
-                    $('#dropArea').css('display', 'none');
-                    $('#guessArea').css('display', 'none');
+                    $('#dropArea').hide(300);
+                    $('#guessArea').hide(300);
                 }else{
                     alert('这三张牌不符合3张相连或者3张相同数字');
                 }
@@ -368,10 +411,11 @@
         }
     });
     function isThreeOk(pokerList){
-        pokerList.sort(sortNumber);
-        if(pokerList[2]-pokerList[1]==1 && pokerList[1]-pokerList[0]==1){
+        var tmp_pokerList = pokerList.slice(0);
+        tmp_pokerList.sort(sortNumber);
+        if(tmp_pokerList[2]-tmp_pokerList[1]==1 && tmp_pokerList[1]-tmp_pokerList[0]==1){
             return true;
-        }else if(pokerList[0]%10 == pokerList[1]%10 && pokerList[1]%10 == pokerList[2]%10){
+        }else if(tmp_pokerList[0]%10 == tmp_pokerList[1]%10 && tmp_pokerList[1]%10 == tmp_pokerList[2]%10){
             return true;
         }else{ return false;}
     }
@@ -419,9 +463,9 @@
             for (j = pNum - 1; j >= 0; j--) {
                 delPoker(myPokers[j]);
             }
-            $('#guessArea').css('display', 'none');
-            $('#selectArea').css('display', 'none');
-            $('#dropArea').css('display', 'none');
+            $('#guessArea').hide(300);
+            $('#selectArea').hide(300);
+            $('#dropArea').hide(300);
         } else {
             $('#gameMessageArea').prepend($('<p>').html('小伙伴' + data.who + '猜' + formatPoker(data.pokerid) + '猜错了'));
         }
@@ -458,11 +502,11 @@
 
     //游戏结束
     function gameOver() {
-        $('#selectArea').css('display', 'none');
-        $('#dropArea').css('display', 'none');
-        $('#guessArea').css('display', 'none');
+        $('#selectArea').hide(300);
+        $('#dropArea').hide(300);
+        $('#guessArea').hide(300);
         $('#pokerList').html('');
-        $('#btn_ready').css('display', 'block');
+        $('#btn_ready').show(300)
     }
     //点击重新选择按钮
     $('#btn_cancel').click(function() {
