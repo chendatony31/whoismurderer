@@ -112,7 +112,7 @@ border-radius:5px; }
 	#roomNumCont{ position:absolute; left:4px;top:1px; font-weight:bold; color:#ddd; font-size:13px;}
 	.btn_op{height:32px; margin:0;}
 	#selectArea {font-size:13px;}
-	#selectArea input{height:32px; font-size:16px; margin:0;width:32x;}
+	#selectArea input{height:32px; font-size:16px; margin:0;width:32px;}
 	#pokerList li {height:41px; width:30px; padding:16px 0 0 2px; margin:2px 0 0 -10px;}
 	#pokerList li span {position:absolute; top:0;}
 	#guessArea input { height:32px; font-size:13px;}
