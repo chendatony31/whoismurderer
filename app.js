@@ -1,12 +1,17 @@
 ﻿$(document).ready(function() {
-    var socket = io.connect('http://42.202.146.184:3000/game'); 
-    socket.on('server is Ok',
-    function(data) {
+    var socket = io.connect('http://localhost:3000/game'); 
+    var STATE = ["等待","游戏中"]
+    socket.on('server is Ok',function(data) {
         console.log('连接上了');
         $('#loading').hide(300);
         $('#welcomeStage').show(300);
         $('#totalVisit').html(data[0]);
         $('#onlineNum').html(data[1]);
+        // var tmp_roomlist = data[2];
+        // for (i = 0; i < tmp_roomlist.length; i++) {
+        //     $('#roomlist').append($('<li>').html("房间号:"+ tmp_roomlist[i].roomid + "人数："+ tmp_roomlist[i].num + "游戏状态：" + STATE[tmp_roomlist[i].gaming] ));
+        //    //$('#roomlist').append($('<li>').html(tmp_roomlist));
+        // }
     });
     
     var nickName;
@@ -158,13 +163,21 @@
         if(roomUserNum == 1){
             alert('目前房间里只有你一个人哦，赶紧去叫你的小伙伴们吧,你的房间号是：' + roomNum);
         }else{
-            $('#gameMessageArea').html('');
-            $('.record').html('');
+            
             socket.emit('im ready');
             $('#btn_ready').hide(300);
         }
     });
 
+    socket.on('i am ready',function(who){
+        $('#gameMessageArea').prepend($('<p>').html(who +" 准备了"));
+    });
+    socket.on('all is ready',function(){
+        alert('游戏开始啦');
+        $('#gameMessageArea').html('');
+        $('.record').html('');
+        $('#guessArea').html('');
+    });
     socket.on('test',
     function() {
         alert('gege');
