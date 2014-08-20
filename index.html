@@ -23,31 +23,40 @@
         </div>
         <div id="welcomeStage">
             <h1>
-                谁是凶手
+                谁是凶手<span> v0.2</span>
             </h1>
             <div id="roomNumLogin">
 
-                房间号：<input id="input_roomnum" type="number" min="0" max="100"　placeholder="0-100" /><br>
-                <button id="btn_loginThisRoom" class="btn_login">加入这个房间</button>
-                <button id="btn_createNewRoom" class="btn_login">新建一个房间</button>
+                房间号：<input id="input_roomnum" type="number" min="0" max="100"　placeholder="0-100" /> <button id="btn_loginThisRoom" class="btn_login">加入这个房间</button><br>
+                <br>
+                OR<br><br>
+                 <button id="btn_createNewRoom" class="btn_login">新建一个房间</button>
              </div>
             <div id="nickNameLogin">
             昵　称：<input type="text" id="input_nickname" maxlength="14" autofocus="autofocus"
             placeholder="输入你的昵称" /><br />
-             
+             <br>
             <button id="btn_checkNickName" class="btn_login">
                 进入
             </button>
             
             </div>
-            <p>总访问:<span id="totalVisit"></span>,目前在线人数：<span id="onlineNum"></span></p>
+            <hr style="border:1px solid #2a2a2a">
+
+            <h3>房间列表</h3>
             <ul id="roomlist">
                 
             </ul>
-            <p>玩法：28张牌，4种花色，1到7,全部玩家(可2-6人)都点击准备后，游戏开始<br>
-            系统分给每人若干张手牌，再从剩下的牌堆里取一张为‘凶手’剩余牌亮出 <br>
-            然后以 要牌(某个花色) -> 出牌 -> 下一人要牌的顺序进行，直到猜出凶手是谁(哪张牌)<br>
-            出牌阶段如果有3张同样数字的或3张同色连顺，必须要出3张</p>
+            <p>总访问:<span id="totalVisit"></span>,目前在线人数：<span id="onlineNum"></span></p>
+            <h3>游戏规则</h3>
+            <p id="gameinfo">28张牌（4种花色的1到7）,手牌24张，3张基础公共牌，1张凶手牌<br>
+            全部玩家(2-6人)都点击准备后，游戏开始<br>
+            游戏以 要牌(某个花色) -> 出牌 -> 下一人要牌的顺序进行，直到猜出凶手是哪张牌<br><br>
+            出牌阶段如果有3张同样数字的或3张同色连顺，必须要出3张，没有三张出1张<br>
+            在要牌出牌阶段的人可以猜哪个牌是凶手（猜错就输了，慎重）<br>
+            游戏过程中记牌很重要。点击记录板的空格可以标记</p>
+            <br>
+            <a style="font-size:13px;" href="http://www.tony77.com/" title="陈达的博客">我的的博客</a>
             
         </div>
         <div id="gameStage">

@@ -1,5 +1,5 @@
 ﻿$(document).ready(function() {
-    var socket = io.connect('http://localhost:3000/game'); 
+    var socket = io.connect('http://42.202.146.184:3000/game'); 
     var STATE = ["等待","游戏中"]
     socket.on('server is Ok',function(data) {
         console.log('连接上了');
@@ -7,13 +7,14 @@
         $('#welcomeStage').show(300);
         $('#totalVisit').html(data[0]);
         $('#onlineNum').html(data[1]);
-        // var tmp_roomlist = data[2];
-        // for (i = 0; i < tmp_roomlist.length; i++) {
-        //     $('#roomlist').append($('<li>').html("房间号:"+ tmp_roomlist[i].roomid + "人数："+ tmp_roomlist[i].num + "游戏状态：" + STATE[tmp_roomlist[i].gaming] ));
-        //    //$('#roomlist').append($('<li>').html(tmp_roomlist));
-        // }
+        var tmp_roomlist = data[2];
+        for (i = 0; i < tmp_roomlist.length; i++) {
+            $('#roomlist').append($('<li>').html("房间号:"+ tmp_roomlist[i].roomid + "　人数："+ tmp_roomlist[i].num + "/6　状态：" + STATE[tmp_roomlist[i].gaming] ));
+        }
     });
-    
+    socket.on('disconnect',function(){
+        alert('Shit，服务器又崩了，赶紧去qq群72588029 反映一下')
+    });
     var nickName;
     var whosTurn;
     var gamerNum;
@@ -140,7 +141,7 @@
         $('#userNum').html(data[1].length);
         $('#roomNum').html(roomNum);
         if(roomUserNum == 1){
-            alert('你的房间号是'+ roomNum + ",赶紧通过微信叫好友一起来玩吧");
+            alert('你的房间号是'+ roomNum + ",赶紧通过微信qq叫好友一起来玩吧");
         }
     });
     socket.on('not this room',function(){
@@ -157,6 +158,7 @@
             $('#userList').append($('<li>').text(userList[i]));
         }
         $('#userNum').html(userList.length);
+        roomUserNum = userlist.length;
     });
     //准备按钮点击
     $('#btn_ready').click(function() {
@@ -322,11 +324,17 @@
     });
     //没有收到牌
     socket.on('accept nopoker',
-    function(name) {
-        reNum++;
-        $('#gameMessageArea').prepend($('<p>').text(name + '没有牌给你 '));
-        if (reNum == gamerNum - 1) {
-            dropPokers();
+    function(data) {
+        if(data[1] == nickName){
+            reNum++;
+            $('#gameMessageArea').prepend($('<p>').text(data[0] + '没有牌给你 '));
+            if (reNum == gamerNum - 1) {
+                dropPokers();
+            }
+        }else if(data[0] == nickName){
+            $('#gameMessageArea').prepend($('<p>').text('你没有牌给他,跳过'));
+        }else{
+            $('#gameMessageArea').prepend($('<p>').text(data[0] + '没有这个花色的牌给他'));
         }
     });
     //扔牌
