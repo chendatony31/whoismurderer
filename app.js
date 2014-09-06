@@ -1,5 +1,5 @@
 ﻿$(document).ready(function() {
-    var socket = io.connect('http://42.202.146.184:3000/game'); 
+    var socket = io.connect('http://localhost:3000/game'); 
     var STATE = ["等待","游戏中"]
     socket.on('server is Ok',function(data) {
         console.log('连接上了');
@@ -8,10 +8,29 @@
         $('#totalVisit').html(data[0]);
         $('#onlineNum').html(data[1]);
         var tmp_roomlist = data[2];
+         $('#roomlist').html('');
         for (i = 0; i < tmp_roomlist.length; i++) {
             $('#roomlist').append($('<li>').html("房间号:"+ tmp_roomlist[i].roomid + "　人数："+ tmp_roomlist[i].num + "/6　状态：" + STATE[tmp_roomlist[i].gaming] ));
         }
     });
+    socket.on('someone in',function(data){
+        updateOnlineData(data);
+    });
+    socket.on('room change',function(data){
+        var tmp_roomlist = data;
+         $('#roomlist').html('');
+        for (i = 0; i < tmp_roomlist.length; i++) {
+            $('#roomlist').append($('<li>').html("房间号:"+ tmp_roomlist[i].roomid + "　人数："+ tmp_roomlist[i].num + "/6　状态：" + STATE[tmp_roomlist[i].gaming] ));
+        }
+    });
+    socket.on('someone out',function(data){
+        updateOnlineData(data);
+    });
+    function updateOnlineData(data){
+        $('#totalVisit').html(data[0]);
+        $('#onlineNum').html(data[1]);
+    }
+
     socket.on('disconnect',function(){
         alert('Shit，服务器又崩了，赶紧去qq群72588029 反映一下')
     });
@@ -172,13 +191,19 @@
     });
 
     socket.on('i am ready',function(who){
-        $('#gameMessageArea').prepend($('<p>').html(who +" 准备了"));
+        if(nickName){
+            $('#gameMessageArea').prepend($('<p>').html(who +" 准备了"));
+        }
     });
     socket.on('all is ready',function(){
-        alert('游戏开始啦');
-        $('#gameMessageArea').html('');
-        $('.record').html('');
-        $('#guessArea').html('');
+        if(nickName){
+            alert('游戏开始啦');
+            $('#gameMessageArea').html('');
+            $('.record').html('');
+        }else{
+            alert('这个房间游戏已经开始了。。。');
+            location.reload();
+        }
     });
     socket.on('test',
     function() {
