@@ -268,7 +268,7 @@
     });
     $('#btn_passby').click(function(){
         $('#passbyArea').hide(300);
-        $('guessArea').hide(300);
+        $('#guessArea').hide(300);
         socket.emit('passed by');
     })
     
