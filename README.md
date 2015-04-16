@@ -45,3 +45,7 @@
 
 
 [陈达的博客] (http://www.tony77.com/)
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/chendatony31/whoismurderer/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
