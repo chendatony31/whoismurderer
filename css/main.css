@@ -1,217 +1,829 @@
-html,body,#chatForm,#input_msg,#btnSend,#gameArea,#chatArea,ul,li,p{ padding:0; margin:0;}
-html,body{ width:100%; height:100%;font-family:'Microsoft Yahei',Helvetica,Verdanam,sans-serif;}
-body{background-color:#333; background:url('../images/bg_loading.jpg');}
-ul{list-style-type:none;}
-h1{font-size:30px; text-align:center; margin-top: 40px;}
-h2{font-size:16px; text-align:center; margin:8px;}
-h3{font-size:19px; text-align:center; margin-top:20px;}
-.tips{font-size:13px; color:red; text-indent:8px;}
-.panels{background:#bbb; box-shadow:0 5px 5px #000}
-#btn_ready{ position:absolute;}
-#btn_guess{ width:40px;}
+html,
+body,
+#chatForm,
+#input_msg,
+#btnSend,
+#gameArea,
+#chatArea,
+ul,
+li,
+p {
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+
+    font-family: "Microsoft Yahei",Helvetica,Verdanam,sans-serif;
+}
+
+body {
+    background: url("../images/bg_loading.jpg");
+    background-color: #333;
+}
+
+ul {
+    list-style-type: none;
+}
+
+h1 {
+    margin-top: 40px;
+
+    font-size: 30px;
+    text-align: center;
+}
+
+h2 {
+    margin: 8px;
+
+    font-size: 16px;
+    text-align: center;
+}
+
+h3 {
+    margin-top: 20px;
+
+    font-size: 19px;
+    text-align: center;
+}
+
+.tips {
+    font-size: 13px;
+    text-indent: 8px;
+
+    color: red;
+}
+
+.panels {
+    background: #bbb;
+    box-shadow: 0 5px 5px #000;
+}
+
+#btn_ready {
+    position: absolute;
+}
+
+#btn_guess {
+    width: 40px;
+}
 /* 入口  */
 
-h1 span{ font-size: 14px;}
-#loading { position:absolute; width:100%; height:100%; background:url('../images/bg_loading.jpg');}
-#loadingImg{position:absolute; margin:auto; top:0; bottom:0; left:0; right:0; width:90px; height:90px;}
-#welcomeStage{ position:absolute; width:100%; height:100%; display:none;
-	background:url('../images/bg_loading.jpg'); text-align:center; color:#ddd;}
-#welcomeStage *{color:#ddd; }
-#roomNumLogin, #nickNameLogin{ margin: 60px 0 30px;}
-#input_nickname{ width:200px; height:40px; background:transparent; border:none; outline:none;
-	border-bottom:1px solid #ddd; font-size:20px; color:#fff; padding-left:8px;}
-#input_roomnum{width:140px; height:40px; background:transparent; border:none; outline:none;
-	border-bottom:1px solid #ddd; font-size:20px; color:#fff; padding-left:8px; }
-.btn_login{ width:80px; height:40px; color:#000 !important;}
-#btn_loginThisRoom{ vertical-align: top;}
-#btn_createNewRoom{ vertical-align: middle;}
+h1 span {
+    font-size: 14px;
+}
 
+#loading {
+    position: absolute;
 
+    width: 100%;
+    height: 100%;
 
-#gameStage{ width:100%; display:none;}
-#gameArea{ width:100%;position:fixed; left:0; border:none;}
-#nickNameLogin{ display: none;}
-#roomlist{ width:280px; text-align: left; margin: 0 auto;}
-#roomlist li{ margin: 4px 0}
-#gameinfo{ width:620px ; text-align: left; margin: 0 auto;}
+    background: url("../images/bg_loading.jpg");
+}
+
+#loadingImg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    width: 90px;
+    height: 90px;
+    margin: auto;
+}
+
+#welcomeStage {
+    position: absolute;
+    display: none;
+
+    width: 100%;
+    height: 100%;
+
+    text-align: center;
+
+    color: #ddd;
+    background: url("../images/bg_loading.jpg");
+}
+
+#welcomeStage * {
+    color: #ddd;
+}
+
+#roomNumLogin,
+#nickNameLogin {
+    margin: 60px 0 30px;
+}
+
+#input_nickname {
+    width: 200px;
+    height: 40px;
+    padding-left: 8px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+
+    font-size: 20px;
+
+    color: #fff;
+    outline: none;
+    background: transparent;
+}
+
+#input_roomnum {
+    width: 140px;
+    height: 40px;
+    padding-left: 8px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+
+    font-size: 20px;
+
+    color: #fff;
+    outline: none;
+    background: transparent;
+}
+
+.btn_login {
+    width: 80px;
+    height: 40px;
+
+    color: #000 !important;
+}
+
+#btn_loginThisRoom {
+    vertical-align: top;
+}
+
+#btn_createNewRoom {
+    vertical-align: middle;
+}
+
+#gameStage {
+    display: none;
+
+    width: 100%;
+}
+
+#gameArea {
+    position: fixed;
+    left: 0;
+
+    width: 100%;
+    border: none;
+}
+
+#nickNameLogin {
+    display: none;
+}
+
+#roomlist {
+    width: 280px;
+    margin: 0 auto;
+
+    text-align: left;
+}
+
+#roomlist li {
+    margin: 4px 0;
+}
+
+#gameinfo {
+    width: 620px;
+    margin: 0 auto;
+
+    text-align: left;
+}
 
 
 
 /* 主要区域 用户列表 信息列表 记录 */
-#mainCont{ position:relative; width:960px; height:auto; margin:0 auto;}
+#mainCont {
+    position: relative;
 
-#userListCont{ width:150px;  position:absolute; height:200px; padding:4px; top:20px; left:10px; border:1px solid #666; }
-#userList{ width:100%; height:110px; padding:0 8px; }
-#userNumCont{position:absolute; top:202px; left:22px;}
-#roomNumCont{position:absolute; top:202px; left:90px; }
+    width: 960px;
+    height: auto;
+    margin: 0 auto;
+}
 
-#gameMessageArea{height:360px; overflow: auto; padding:0 8px;}
-#msgCont{position:absolute; top:20px; left:180px;
-	width:400px; height: 400px; border:1px solid #333; 
-	padding:4px; }
+#userListCont {
+    position: absolute;
+    top: 20px;
+    left: 10px;
 
-#infoArea{ position:absolute; width:320px; top:20px; left:600px;border:1px solid #333; padding:4px 4px 10px;}
-#infoArea table{position:relative; border-collapse:collapse; margin:0 auto;}
-#infoArea table tr td,th{ width:32px; height:32px;border:1px solid #333; text-align:center;}
-.record{ cursor:pointer;}
-.redIcon{ font-size:22px; color:red;}
-.blackIcon {font-size:22px; color:black;}
-.btn_op{ height:30px; margin-left:8px;}
+    width: 150px;
+    height: 200px;
+    padding: 4px;
+    border: 1px solid #666;
+}
+
+#userList {
+    width: 100%;
+    height: 110px;
+    padding: 0 8px;
+}
+
+#userNumCont {
+    position: absolute;
+    top: 202px;
+    left: 22px;
+}
+
+#roomNumCont {
+    position: absolute;
+    top: 202px;
+    left: 90px;
+}
+
+#gameMessageArea {
+    overflow: auto;
+
+    height: 360px;
+    padding: 0 8px;
+}
+
+#msgCont {
+    position: absolute;
+    top: 20px;
+    left: 180px;
+
+    width: 400px;
+    height: 400px;
+    padding: 4px;
+    border: 1px solid #333;
+}
+
+#infoArea {
+    position: absolute;
+    top: 20px;
+    left: 600px;
+
+    width: 320px;
+    padding: 4px 4px 10px;
+    border: 1px solid #333;
+}
+
+#infoArea table {
+    position: relative;
+
+    margin: 0 auto;
+
+    border-collapse: collapse;
+}
+
+#infoArea table tr td,
+th {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #333;
+
+    text-align: center;
+}
+
+.record {
+    cursor: pointer;
+}
+
+.redIcon {
+    font-size: 22px;
+
+    color: red;
+}
+
+.blackIcon {
+    font-size: 22px;
+
+    color: black;
+}
+
+.btn_op {
+    height: 30px;
+    margin-left: 8px;
+}
 
 
 /* 底部区域*/
 
-#footerCont{ position:fixed;left:0;right:0;margin:auto;bottom:0; width:960px; height:150px; background:#333; padding:5px; }
+#footerCont {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
 
-/* 各种操作区  扑克*/ 
-#btn_start{ width:110px; height:30px; }
-#dropArea{position:absolute; left:12px; display:none;}
+    width: 960px;
+    height: 150px;
+    margin: auto;
+    padding: 5px;
 
-#selectArea {position:absolute; left: 12px; display:none;}
-#selectArea input { width:60px; height:30px; font-size:22px;}
-#passbyArea {position:absolute; left: 12px; display:none;}
-passbyArea input {height:30px;}
-#guessArea{position:absolute;  right:12px;  bottom:8px ; display:none; }
-#guessArea input { height:30px; font-size:13px;}
-#guessColor { font-size:18px; height:30px; vertical-align:middle; } 
-#guessNum {height:30px; vertical-align:middle;font-size:18px;}
-#heart,#diamond{ color:red;}
+    background: #333;
+}
 
-#operateArea{ position:absolute; right:10px; top:0; bottom:0;  width:360px; height:130px;
-	margin:auto; border:1px solid #333; padding:5px; background:#ddd; }
-#pokerArea{}
-#pokerList li{ padding:0 5px;position:relative; margin-left:-50px; float:left; width:80px; height:140px; background:#abc;border:1px solid;
-border-radius:5px; }
-#pokerList li:first-child{margin-left:4px; }
-.drapablePoker{ background:#6bc !important;  top:-10px; cursor:pointer;}
+/* 各种操作区  扑克*/
+#btn_start {
+    width: 110px;
+    height: 30px;
+}
+
+#dropArea {
+    position: absolute;
+    left: 12px;
+    display: none;
+}
+
+#selectArea {
+    position: absolute;
+    left: 12px;
+    display: none;
+}
+
+#selectArea input {
+    width: 60px;
+    height: 30px;
+
+    font-size: 22px;
+}
+
+#passbyArea {
+    position: absolute;
+    left: 12px;
+    display: none;
+}
+
+passbyarea input {
+    height: 30px;
+}
+
+#guessArea {
+    position: absolute;
+    right: 12px;
+    bottom: 8px;
+    display: none;
+}
+
+#guessArea input {
+    height: 30px;
+
+    font-size: 13px;
+}
+
+#guessColor {
+    height: 30px;
+
+    font-size: 18px;
+    vertical-align: middle;
+}
+
+#guessNum {
+    height: 30px;
+
+    font-size: 18px;
+    vertical-align: middle;
+}
+
+#heart,
+#diamond {
+    color: red;
+}
+
+#operateArea {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    bottom: 0;
+
+    width: 360px;
+    height: 130px;
+    margin: auto;
+    padding: 5px;
+    border: 1px solid #333;
+
+    background: #ddd;
+}
 
 
 
-.ui-draggable:before{content:url('../images/move.png'); position:absolute; left:-8px; top:-10px; opacity:0.3;}
-.ui-draggable:hover:before{opacity:1;}
+#pokerList li {
+    position: relative;
+    float: left;
+
+    width: 80px;
+    height: 140px;
+    margin-left: -50px;
+    padding: 0 5px;
+    border: 1px solid;
+
+    border-radius: 5px;
+    background: #abc;
+}
+
+#pokerList li:first-child {
+    margin-left: 4px;
+}
+
+.drapablePoker {
+    top: -10px;
+
+    background: #6bc !important;
+    cursor: pointer;
+}
+
+.ui-draggable:before {
+    content: url("../images/move.png");
+
+    position: absolute;
+    top: -10px;
+    left: -8px;
+
+    opacity: 0.3;
+}
+
+.ui-draggable:hover:before {
+    opacity: 1;
+}
 
 .ui-widget-header {
-	border: 1px solid #333;
-	background: #333 url("../images/widget_header.png") 50% 50% repeat-x;
-	color: #fff;
-	font-weight: bold;
+    border: 1px solid #333;
+
+    font-weight: bold;
+
+    color: #fff;
+    background: #333 url("../images/widget_header.png") 50% 50% repeat-x;
 }
 
-@media screen and (max-width: 800px){
-	#btn_ready{ margin-left:4px; width:60px;}
-	#gameinfo{ width:94% ; padding:0 3%; }
-	#footerCont{ width:100%; padding:0;margin:0; border:none; height:75px;}
-	#operateArea{position: fixed; width:100%; padding:0;margin:0; border:none;
-		bottom:75px; left:0; right:0;top:auto; height:66px; }
-	h2{font-size:14px;margin:0 0 4px 0;}
-	#infoArea{position: fixed; width:100%; padding:0;margin:0; border:none; 
-		bottom:140px; left:0; right:0;top:auto; height:200px;}
-	#infoArea table{ width:100%;}	
-	#infoArea table tr td{ width:32px; height:36px;border:1px solid #333; text-align:center;
-		font-size:20px;}
-	#infoArea table tr th{ height:18px;font-size:13px;}
-	#msgCont{width:100%;}
-	.tips{display:none;}
-	#mainCont{ position:relative; width:100%; height:auto; margin:0 auto;}
-	#gameMessageArea{height:360px; overflow: auto; padding:0 8px;}
-	#msgCont{position:fixed; width:100%; top:0; left:0;
-		height:400px; 
-		padding:0; border:none; }
-	.redIcon{ font-size:15px; }
-	.blackIcon {font-size:15px;}
-	#userListCont{display:none;}
-	#userNumCont{position:absolute; right:4px;top:1px; font-weight:bold; left:auto; color:#ddd; font-size:13px;}
-	#roomNumCont{ position:absolute; left:4px;top:1px; font-weight:bold; color:#ddd; font-size:13px;}
-	.btn_op{height:32px; margin:0;}
-	#selectArea {font-size:13px;}
-	#selectArea input{height:32px; font-size:16px; margin:0;width:32px;}
-	#pokerList li {height:41px; width:30px; padding:16px 0 0 2px; margin:2px 0 0 -10px;}
-	#pokerList li span {position:absolute; top:0;}
-	.shortone{ height:20px !important; width:30px !important; padding: 14px 0 0 2px !important; margin: 1px 0 !important;}
-	.shortone.darkpoker{ margin-left: -4px !important;}
-	.shortone.darkpoker span{ font-size: 14px; line-height: 100%;}
-	#pokerList .shortone:first-child{ margin: 0 !important;}
-	#guessArea input { height:32px; font-size:13px;}
-	#selectArea{left:4px;}
-	#guessArea{position:absolute;  right:4px;  bottom:auto; }
-	#guessColor { font-size:16px; height:32px; margin:0; } 
-	#guessNum {height:32px;font-size:16px; margin:0;}
-	#dropArea{ left:4px;}
-	
+@media screen and (max-width: 800px) {
+    #btn_ready {
+        width: 60px;
+        margin-left: 4px;
+    }
+
+    #gameinfo {
+        width: 94%;
+        padding: 0 3%;
+    }
+
+    #footerCont {
+        width: 100%;
+        height: 75px;
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
+
+    #operateArea {
+        position: fixed;
+        top: auto;
+        right: 0;
+        bottom: 75px;
+        left: 0;
+
+        width: 100%;
+        height: 66px;
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
+
+    h2 {
+        margin: 0 0 4px 0;
+
+        font-size: 14px;
+    }
+
+    #infoArea {
+        position: fixed;
+        top: auto;
+        right: 0;
+        bottom: 140px;
+        left: 0;
+
+        width: 100%;
+        height: 200px;
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
+
+    #infoArea table {
+        width: 100%;
+    }
+
+    #infoArea table tr td {
+        width: 32px;
+        height: 36px;
+        border: 1px solid #333;
+
+        font-size: 20px;
+        text-align: center;
+    }
+
+    #infoArea table tr th {
+        height: 18px;
+
+        font-size: 13px;
+    }
+
+    #msgCont {
+        width: 100%;
+    }
+
+    .tips {
+        display: none;
+    }
+
+    #mainCont {
+        position: relative;
+
+        width: 100%;
+        height: auto;
+        margin: 0 auto;
+    }
+
+    #gameMessageArea {
+        overflow: auto;
+
+        height: 360px;
+        padding: 0 8px;
+    }
+
+    #msgCont {
+        position: fixed;
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 400px;
+        padding: 0;
+        border: none;
+    }
+
+    .redIcon {
+        font-size: 15px;
+    }
+
+    .blackIcon {
+        font-size: 15px;
+    }
+
+    #userListCont {
+        display: none;
+    }
+
+    #userNumCont {
+        position: absolute;
+        top: 1px;
+        right: 4px;
+        left: auto;
+
+        font-size: 13px;
+        font-weight: bold;
+
+        color: #ddd;
+    }
+
+    #roomNumCont {
+        position: absolute;
+        top: 1px;
+        left: 4px;
+
+        font-size: 13px;
+        font-weight: bold;
+
+        color: #ddd;
+    }
+
+    .btn_op {
+        height: 32px;
+        margin: 0;
+    }
+
+    #selectArea {
+        font-size: 13px;
+    }
+
+    #selectArea input {
+        width: 32px;
+        height: 32px;
+        margin: 0;
+
+        font-size: 16px;
+    }
+
+    #pokerList li {
+        width: 30px;
+        height: 41px;
+        margin: 2px 0 0 -10px;
+        padding: 16px 0 0 2px;
+    }
+
+    #pokerList li span {
+        position: absolute;
+        top: 0;
+    }
+
+    .shortone {
+        width: 30px !important;
+        height: 20px !important;
+        margin: 1px 0 !important;
+        padding: 14px 0 0 2px !important;
+    }
+
+    .shortone.darkpoker {
+        margin-left: -4px !important;
+    }
+
+    .shortone.darkpoker span {
+        font-size: 14px;
+        line-height: 100%;
+    }
+
+    #pokerList .shortone:first-child {
+        margin: 0 !important;
+    }
+
+    #guessArea input {
+        height: 32px;
+
+        font-size: 13px;
+    }
+
+    #selectArea {
+        left: 4px;
+    }
+
+    #guessArea {
+        position: absolute;
+        right: 4px;
+        bottom: auto;
+    }
+
+    #guessColor {
+        height: 32px;
+        margin: 0;
+
+        font-size: 16px;
+    }
+
+    #guessNum {
+        height: 32px;
+        margin: 0;
+
+        font-size: 16px;
+    }
+
+    #dropArea {
+        left: 4px;
+    }
 }
-
-
-
 
 .circle {
-	background-color: rgba(0,0,0,0);
-	border:5px solid rgba(0,183,229,0.9);
-	opacity:.9;
-	border-right:5px solid rgba(0,0,0,0);
-	border-left:5px solid rgba(0,0,0,0);
-	border-radius:50px;
-	box-shadow: 0 0 35px #2187e7;
-	width:50px;
-	height:50px;
-	margin:0 auto;
-	animation:spinPulse 1.2s infinite ease-in-out;
-	-moz-animation:spinPulse 1.2s infinite ease-in-out;
-	-webkit-animation:spinPulse 1.2s infinite linear;
-	-o-animation:spinPulse 1.2s infinite ease-in-out;
+    width: 50px;
+    height: 50px;
+    margin: 0 auto;
+    border: 5px solid rgba(0,183,229,0.9);
+    border-right: 5px solid rgba(0,0,0,0);
+    border-left: 5px solid rgba(0,0,0,0);
+
+    opacity: 0.9;
+    border-radius: 50px;
+    background-color: rgba(0,0,0,0);
+    box-shadow: 0 0 35px #2187e7;
+    -webkit-animation: spinPulse 1.2s infinite linear;
+       -moz-animation: spinPulse 1.2s infinite ease-in-out;
+         -o-animation: spinPulse 1.2s infinite ease-in-out;
+            animation: spinPulse 1.2s infinite ease-in-out;
 }
+
 .circle1 {
-	background-color: rgba(0,0,0,0);
-	border:5px solid rgba(0,183,229,0.9);
-	opacity:.9;
-	border-left:5px solid rgba(0,0,0,0);
-	border-right:5px solid rgba(0,0,0,0);
-	border-radius:50px;
-	box-shadow: 0 0 15px #2187e7; 
-	width:30px;
-	height:30px;
-	margin:0 auto;
-	position:relative;
-	top:-50px;
-	animation:spinoffPulse 1s infinite linear;
-	-moz-animation:spinoffPulse 1s infinite linear;
-	-webkit-animation:spinoffPulse 1s infinite linear;
-	-o-animation:spinoffPulse 1s infinite linear;
+    position: relative;
+    top: -50px;
+
+    width: 30px;
+    height: 30px;
+    margin: 0 auto;
+    border: 5px solid rgba(0,183,229,0.9);
+    border-right: 5px solid rgba(0,0,0,0);
+    border-left: 5px solid rgba(0,0,0,0);
+
+    opacity: 0.9;
+    border-radius: 50px;
+    background-color: rgba(0,0,0,0);
+    box-shadow: 0 0 15px #2187e7;
+    -webkit-animation: spinoffPulse 1s infinite linear;
+       -moz-animation: spinoffPulse 1s infinite linear;
+         -o-animation: spinoffPulse 1s infinite linear;
+            animation: spinoffPulse 1s infinite linear;
 }
+
 @keyframes spinPulse {
-	0% { transform:rotate(160deg); opacity:0; box-shadow:0 0 1px #2187e7;}
-	50% { transform:rotate(145deg); opacity:1; }
-	100% { transform:rotate(-320deg); opacity:0; }
+    0% {
+        opacity: 0;
+        box-shadow: 0 0 1px #2187e7;
+        transform: rotate(160deg);
+    }
+
+    50% {
+        opacity: 1;
+        transform: rotate(145deg);
+    }
+
+    100% {
+        opacity: 0;
+        transform: rotate(-320deg);
+    }
 }
+
 @keyframes spinoffPulse {
-	0% { transform:rotate(0deg); }
-	100% { transform:rotate(360deg);  }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
+
 @-moz-keyframes spinPulse {
-	0% { -moz-transform:rotate(160deg); opacity:0; box-shadow:0 0 1px #2187e7;}
-	50% { -moz-transform:rotate(145deg); opacity:1; }
-	100% { -moz-transform:rotate(-320deg); opacity:0; }
+    0% {
+        opacity: 0;
+        box-shadow: 0 0 1px #2187e7;
+        -moz-transform: rotate(160deg);
+    }
+
+    50% {
+        opacity: 1;
+        -moz-transform: rotate(145deg);
+    }
+
+    100% {
+        opacity: 0;
+        -moz-transform: rotate(-320deg);
+    }
 }
+
 @-moz-keyframes spinoffPulse {
-	0% { -moz-transform:rotate(0deg); }
-	100% { -moz-transform:rotate(360deg);  }
+    0% {
+        -moz-transform: rotate(0deg);
+    }
+
+    100% {
+        -moz-transform: rotate(360deg);
+    }
 }
+
 @-webkit-keyframes spinPulse {
-	0% { -webkit-transform:rotate(160deg); opacity:0; box-shadow:0 0 1px #2187e7; }
-	50% { -webkit-transform:rotate(145deg); opacity:1;}
-	100% { -webkit-transform:rotate(-320deg); opacity:0; }
+    0% {
+        opacity: 0;
+        box-shadow: 0 0 1px #2187e7;
+        -webkit-transform: rotate(160deg);
+    }
+
+    50% {
+        opacity: 1;
+        -webkit-transform: rotate(145deg);
+    }
+
+    100% {
+        opacity: 0;
+        -webkit-transform: rotate(-320deg);
+    }
 }
+
 @-webkit-keyframes spinoffPulse {
-	0% { -webkit-transform:rotate(0deg); }
-	100% { -webkit-transform:rotate(360deg); }
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
 }
+
 @-o-keyframes spinPulse {
-	0% { -o-transform:rotate(160deg); opacity:0; box-shadow:0 0 1px #2187e7;}
-	50% { -o-transform:rotate(145deg); opacity:1; }
-	100% { -o-transform:rotate(-320deg); opacity:0; }
+    0% {
+        opacity: 0;
+        box-shadow: 0 0 1px #2187e7;
+        -o-transform: rotate(160deg);
+    }
+
+    50% {
+        opacity: 1;
+        -o-transform: rotate(145deg);
+    }
+
+    100% {
+        opacity: 0;
+        -o-transform: rotate(-320deg);
+    }
 }
+
 @-o-keyframes spinoffPulse {
-	0% { -o-transform:rotate(0deg); }
-	100% { -o-transform:rotate(360deg);  }
+    0% {
+        -o-transform: rotate(0deg);
+    }
+
+    100% {
+        -o-transform: rotate(360deg);
+    }
 }
-
-
